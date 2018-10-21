@@ -1,0 +1,6 @@
+RewriteEngine on
+
+#The purpose of this rewrite is that an actual, existing file can be fetched from the server without interference. Without the first rule, every file request (css and js files, images etc) would go to index.php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php

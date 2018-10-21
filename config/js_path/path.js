@@ -1,0 +1,1 @@
+const root_url = window.location.origin + "/terminals_app/";
