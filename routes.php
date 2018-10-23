@@ -13,13 +13,17 @@ if (Auth::logged()) {
 	Route::post('/Terminals/removeTerminal', 'Terminals@removeTerminal');
 
 	Route::get('/Devices/index', 'Devices@index');
+	Route::get('/Devices/{id}', 'Devices@showSingleDevice', $req = ['/^\d+$/']);
 
-	Route::get('/SIM/index', 'SIM@index');
+	Route::get('/SIMs/index', 'SIMs@index');
 
 	Route::get('/Phones/index', 'Phones@index');
+	Route::get('/Phones/panel', 'Phones@showPageNumTwo');
+	Route::post('/Phones/addNewPhone', 'Phones@addNewPhone');
 
 	Route::get('/Agents/index', 'Agents@index');
 	Route::get('/Agents/{id}', 'Agents@showSingleAgent', $req = ['/^\d+$/']);
+	Route::get('/Agents/{page}', 'Agents@index', $req = ['/^p\d+$/']);
 
 	Route::get('/Charges/index', 'Charges@index');
 	Route::get('/Charges/panel', 'Charges@showPageNumTwo');

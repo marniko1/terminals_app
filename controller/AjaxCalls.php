@@ -48,7 +48,32 @@ class AjaxCalls extends BaseController {
 		echo json_encode($response);
 	}
 
+	public function agentsFilter () {
+		$filtered_data = DBAgents::getFilteredAgents('agent', $this->search_value, $this->skip);
+		$this->ajaxResponse($filtered_data);
+	}
+
+	public function devicesFilter () {
+		$filtered_data = DBDevices::getFilteredDevices('device', $this->search_value, $this->skip);
+		$this->ajaxResponse($filtered_data);
+	}
+
+	public function simsFilter () {
+		$filtered_data = DBSIM::getFilteredSIMs('sim', $this->search_value, $this->skip);
+		$this->ajaxResponse($filtered_data);
+	}
+
 	public function submitForm(){
 		
+	}
+
+	public function ajaxResponse ($filtered_data) {
+		$total_num = 0;
+		if (isset($filtered_data[0]->total)) {
+			$total_num = $filtered_data[0]->total;
+		}
+		$pagination_data = $this->preparePaginationLinks($total_num, $this->pg);
+		$response = [$filtered_data, $pagination_data, $this->skip];
+		echo json_encode($response);
 	}
 }

@@ -1,6 +1,12 @@
 		<div class="container">
 			<div class="row">
 				<h1>PHONES</h1>
+				<nav class="navbar col-12 row">
+					<ul class="nav col-12 justify-content-center">
+						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Phones/index';?>">Lista telefona</a></li>
+						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'Phones/panel';?>">Dodaj novi telefon</a></li>
+					</ul>
+				</nav>
 				<form class="mt-2 col-12 mb-5">
 					<input type="text" name="filter" placeholder="Filter" id="filter">
 				</form>

@@ -60,18 +60,11 @@ class BaseController {
 		return $pagination_links;
 	}
 	// method repeats in 3 classes that extends this class, so it is in their base class
-	public function prepareShortenedBookData($data_array) {
-		foreach ($data_array as $key => $value) {
-			$desc = substr($value->description, 0, 45).'... ';
-			$data_array[$key]->description = $desc;
-			if (strpos($value->genre, ',') !== false) {
-				$long_genre = $value->genre;
-				$desc = substr($value->genre, 0, strpos($value->genre, ',')+1).'... ';
-				$data_array[$key]->genre = $desc;
-				$data_array[$key]->long_genre = $long_genre;
-			} else {
-				$data_array[$key]->long_genre = $data_array[$key]->genre;
-			}
-		}
-	}
+	// public function preparePaginationData ($pg) {
+	// 	$skip = 0;
+	// 	if ($pg !== 0) {
+	// 		$pg = substr($pg, 1);
+	// 		$skip = $pg*PG_RESULTS-PG_RESULTS;
+	// 	}
+	// }
 }

@@ -7,4 +7,8 @@ class DBPhones extends DB {
 			on cpm.id = cp.model_id";
 		return self::queryAndFetchInObj($sql);
 	}
+	public static function addNewPhone ($model_id, $imei) {
+		$sql = "insert into cellphones values (default, $model_id, $imei)";
+		return self::executeSQL($sql);
+	}
 }

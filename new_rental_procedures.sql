@@ -65,6 +65,7 @@ $$
 			insert into sim_cards_charges values (default, sim_card_id, agent_id, _user, default);
 		end if;
 		if _imei != '' then
+		-- if phone doesnt exists in db, add phone to db??
 			insert into cellphones_charges values (default, phone_id, agent_id, _user, default);
 		end if;
 		if is_inactive = 0 then
@@ -89,6 +90,7 @@ $$
 			insert into sim_cards_charges values (default, sim_card_id, new_agent_id, _user, default);
 		end if;
 		if _imei != '' then
+		-- if phone doesnt exists in db, add phone to db??
 			insert into cellphones_charges values (default, phone_id, new_agent_id, _user, default);
 		end if;
 

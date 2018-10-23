@@ -17,6 +17,7 @@ class Charges extends BaseController {
 		} else {
 			Msg::createMessage("msg1", "Unsuccess.");
 		}
+		Mail::sendMail('zaduženje', $agent, $off_num, $terminal, $sim = 0, $phone);
 		header("Location: ".INCL_PATH."Charges/index");
 	}
 	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0) {

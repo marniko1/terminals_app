@@ -1,4 +1,4 @@
 <?php
 
-define('PG_RESULTS', 6);
-define('PAG_LINKS_LIMIT', 3);
+define('PG_RESULTS', 10);
+define('PAG_LINKS_LIMIT', 5);
