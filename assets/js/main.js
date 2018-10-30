@@ -13,32 +13,32 @@ window.onload = function() {
 	var ajax = new FilterAndPagination(filter, pagination_links, controller);
     // *************************************************************************************************
 	// stylize forms on home page
-    if (window.location.pathname == '/terminals_app/Terminals/panel') {
+    if (window.location.pathname == '/terminals_app/Terminals/panel' || window.location.pathname == '/terminals_app/Charges/index') {
 
     	// form validation
     	var frmvalidator = new Validator($('div.col-6.form-wrapper form'));
 
     	// add validation rules on fields
-    	// add new_client fields validation rules
-    	frmvalidator.addValidation('first_name', ['req', 'minLength=3', 'maxLength=20']);
-    	frmvalidator.addValidation('last_name', ['req', 'minLength=3', 'maxLength=20']);
-    	frmvalidator.addValidation('email', ['req', 'email']);
-    	frmvalidator.addValidation('address', ['req', 'minLength=3', 'maxLength=20']);
+    	// make new charge fields validation rules
+    	frmvalidator.addValidation('terminal', ['req', 'minLength=5', 'maxLength=5', 'proposalValidation']);
+    	frmvalidator.addValidation('sim', ['req', 'minLength=4', 'maxLength=4', 'proposalValidation']);
+    	frmvalidator.addValidation('imei', ['req', 'minLength=20', 'maxLength=30', 'proposalValidation']);
+    	// frmvalidator.addValidation('email', ['req', 'email']);
     	// add new_book fields validation rules
-    	frmvalidator.addValidation('title', ['req']);
-    	frmvalidator.addValidation('writer', ['req', 'proposalValidation']);
-    	frmvalidator.addValidation('stock', ['req', 'moreThenNull']);
-    	frmvalidator.addValidation("genre[]", ['checkedOne']);
-    	frmvalidator.addValidation('description', ['req']);
+    	// frmvalidator.addValidation('title', ['req']);
+    	// frmvalidator.addValidation('writer', ['req', 'proposalValidation']);
+    	// frmvalidator.addValidation('stock', ['req', 'moreThenNull']);
+    	// frmvalidator.addValidation("genre[]", ['checkedOne']);
+    	// frmvalidator.addValidation('description', ['req']);
     	// add new_rental fields validation rules
-    	frmvalidator.addValidation('client', ['req', 'proposalValidation']);
-    	frmvalidator.addValidation('title1', ['req', 'proposalValidation']);
-    	frmvalidator.addValidation('title2', ['proposalValidation']);
-    	frmvalidator.addValidation('title3', ['proposalValidation']);
-    	frmvalidator.addValidation('title4', ['proposalValidation']);
-    	frmvalidator.addValidation('title5', ['proposalValidation']);
+    	// frmvalidator.addValidation('client', ['req', 'proposalValidation']);
+    	// frmvalidator.addValidation('title1', ['req', 'proposalValidation']);
+    	// frmvalidator.addValidation('title2', ['proposalValidation']);
+    	// frmvalidator.addValidation('title3', ['proposalValidation']);
+    	// frmvalidator.addValidation('title4', ['proposalValidation']);
+    	// frmvalidator.addValidation('title5', ['proposalValidation']);
 
-		// new FormSubmit(frmvalidator);
+		new FormSubmit(frmvalidator);
 		
 		// var first_input = document.querySelector('input');
 		// first_input.focus();
@@ -70,6 +70,20 @@ window.onload = function() {
 				msg_span.addClass('text-danger');
 			}
 		}
+	}
+	// ***********************************************************************************************
+	// if page url is single agent view prepare discharge
+	var url = window.location.origin + window.location.pathname;
+	var url_part = url.replace(root_url, '').split('/');
+	if (url_part[0] == 'Agents' && url_part[1].match(/^\d+$/)) {
+		new Discharge();
+	}
+	// ***********************************************************************************************
+	// if page url is charge view prepare charge form
+	var url = window.location.origin + window.location.pathname;
+	var url_part = url.replace(root_url, '').split('/');
+	if (url_part[0] == 'Charges'  && url_part[1] == 'index') {
+		new Charge();
 	}
 	// ***********************************************************************************************
 	// if page url is single book view or single client view or single writer view, only then prepare for edit button

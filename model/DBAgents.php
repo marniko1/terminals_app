@@ -2,7 +2,7 @@
 
 class DBAgents extends DB {
 	public static function getAllAgents ($skip) {
-		$sql = "select *, concat(initcap(first_name), ' ', initcap(last_name)) as agent, (select count(*) from agents) as total from agents order by agent limit ".PG_RESULTS. "offset $skip";
+		$sql = "select *, concat(initcap(first_name), ' ', initcap(last_name)) as agent, (select count(*) from agents) as total from agents order by agent limit ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getSingleAgent ($id) {
@@ -48,7 +48,11 @@ class DBAgents extends DB {
 		from agents 
 		where concat(first_name, ' ', last_name) like '%$cond%'  or cast(off_num as character varying(5)) like '%$cond%' 
 		order by $cond_name 
-		limit ".PG_RESULTS. "offset $skip";
+		limit ".PG_RESULTS. " offset $skip";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function getAgentByOffNum ($off_num) {
+		$sql = "select concat(initcap(first_name), ' ', initcap(last_name)) as agent from agents where off_num = $off_num";
 		return self::queryAndFetchInObj($sql);
 	}
 }

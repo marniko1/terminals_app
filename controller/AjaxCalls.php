@@ -28,8 +28,13 @@ class AjaxCalls extends BaseController {
 		$this->$method();
 	}
 
-	public function terminalFilter () {
+	public function terminalNumFilter () {
 		$response = DBTerminals::getFilteredTerminalsNum($this->search_value);
+		echo json_encode($response);
+	}
+
+	public function terminalFilter () {
+		$response = DBTerminals::getFilteredTerminals($this->search_value);
 		echo json_encode($response);
 	}
 
@@ -39,12 +44,22 @@ class AjaxCalls extends BaseController {
 	}
 
 	public function printerFilter () {
-		$response = DBDevices::getFilteredPrinters($this->search_value);
+		$response = DBDevices::getFilteredPrinter($this->search_value);
+		echo json_encode($response);
+	}
+
+	public function pdaSimFilter () {
+		$response = DBSIM::getFilteredSIMForPDA($this->search_value);
 		echo json_encode($response);
 	}
 
 	public function simFilter () {
 		$response = DBSIM::getFilteredSIM($this->search_value);
+		echo json_encode($response);
+	}
+
+	public function phoneFilter () {
+		$response = DBPhones::getFilteredPhones($this->search_value);
 		echo json_encode($response);
 	}
 
@@ -61,6 +76,11 @@ class AjaxCalls extends BaseController {
 	public function simsFilter () {
 		$filtered_data = DBSIM::getFilteredSIMs('sim', $this->search_value, $this->skip);
 		$this->ajaxResponse($filtered_data);
+	}
+
+	public function checkAgentByOffNum () {
+		$response = DBAgents::getAgentByOffNum($this->search_value);
+		echo json_encode($response);
 	}
 
 	public function submitForm(){

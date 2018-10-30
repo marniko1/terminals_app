@@ -9,7 +9,7 @@
 				</nav>
 				<form class="form-inline mt-5" method="post" action="<?php echo INCL_PATH.'Terminals/addNewTerminal'; ?>">
 					<div class="form-group ml-2">
-						<label for="terminal_num">Terminal: </label>
+						<label for="terminal_num">Terminal Br.: </label>
 						<input type="text" class="proposal-input" name="terminal_num" id="terminal_num">
 						<div class="proposals d-none">
 							<ul class="mb-0 pl-0"></ul>
@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					<div class="form-group ml-2">
-						<label for="sim">SIM: </label>
+						<label for="sim">pdaSIM: </label>
 						<input type="text" class="proposal-input" name="sim" id="sim">
 						<div class="proposals d-none">
 							<ul class="mb-0 pl-0"></ul>

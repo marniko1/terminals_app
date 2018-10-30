@@ -52,7 +52,7 @@ $$
 	select id from terminals where terminals_num_id = terminal_num_id into terminal_id;
 	select terminals.pda_id from terminals where terminals.id = terminal_id into pda_id;
 	select terminals.printer_id from terminals where terminals.id = terminal_id into printer_id;
-	select id from sim_cards where sim_cards.num = _sim into sim_card_id;
+	select id from sim_cards where cast(sim_cards.num as text) = concat(882,_sim) into sim_card_id;
 	select id from cellphones where imei = _imei into phone_id;
 	-- if agent already exists in base
 	if off_num_exist != 0 then

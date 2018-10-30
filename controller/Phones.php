@@ -1,13 +1,14 @@
 <?php
 
 class Phones extends BaseController {
-	public function index () {
+	public function __construct () {
 		$this->data['title'] = 'Phones';
+	}
+	public function index () {
 		$this->data['phones'] = DBPhones::getAllPhones();
 		$this->show_view('phones_page_1');
 	}
 	public function showPageNumTwo () {
-		$this->data['title'] = 'Phones';
 		$this->data['phones_models'] = DBPhonesModels::getAllPhoneModels();
 		$this->show_view('phones_page_2');
 	}

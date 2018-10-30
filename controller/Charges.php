@@ -1,27 +1,27 @@
 <?php
 
 class Charges extends BaseController {
-	public function index () {
+	public function __construct () {
 		$this->data['title'] = 'Charges';
+	}
+	public function index () {
 		$this->show_view('charges_page_1');
 	}
 	public function showPageNumTwo () {
-		$this->data['title'] = 'Charges';
 		$this->show_view('charges_page_2');
 	}
-	public function makeCharge ($agent, $off_num, $terminal, $sim = 0, $phone) {
-		$req = DBCharges::makeNewCharge($agent, $off_num, intval($terminal), intval($sim), $phone, $_SESSION['user_id']);
+	public function makeCharge ($off_num, $agent, $terminal_num, $sim_num = 0, $phone, $phone_model) {
+		$req = DBCharges::makeNewCharge($agent, $off_num, intval($terminal_num), intval($sim_num), $phone, $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {
 			Msg::createMessage("msg1", "Success.");
 		} else {
 			Msg::createMessage("msg1", "Unsuccess.");
 		}
-		Mail::sendMail('zaduženje', $agent, $off_num, $terminal, $sim = 0, $phone);
+		Mail::sendMail('charge', $agent, $off_num, $terminal_num, substr($sim_num, -4), $phone, $phone_model);
 		header("Location: ".INCL_PATH."Charges/index");
 	}
-	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0) {
-		// var_dump($comment, $agent_id, intval($terminal), intval($sim), intval($phone), intval($inactive));
+	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0, $agent, $off_num, $terminal_num = '', $sim_num = '', $imei = '', $phone_model = '') {
 		$req = DBCharges::makeDischarge($agent_id, intval($terminal), intval($sim), intval($phone), intval($inactive), $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {
@@ -29,6 +29,7 @@ class Charges extends BaseController {
 		} else {
 			Msg::createMessage("msg1", "Unsuccess.");
 		}
+		Mail::sendMail('discharge', $agent, $off_num, $terminal_num, substr($sim_num, -4), $imei, $phone_model, intval($terminal), intval($sim), intval($phone), $comment);
 		header("Location: ".INCL_PATH."Agents/$agent_id");
 	}
 }

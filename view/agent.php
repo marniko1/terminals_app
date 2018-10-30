@@ -24,7 +24,7 @@
 					<tbody class="tbody">
 						<tr>
 							<th scope="row"><?php echo '1'; ?></th>
-							<td><?php echo $this->data['agent'][0]->terminal_num; ?></td>
+							<td id="terminal"><?php echo $this->data['agent'][0]->terminal_num; ?></td>
 							<td><?php echo $this->data['agent'][0]->pda_sn; ?></td>
 							<td><?php echo $this->data['agent'][0]->pda_nav_num; ?></td>
 							<td><?php echo $this->data['agent'][0]->printer_sn; ?></td>
@@ -47,14 +47,14 @@
 						<tr>
 							<th scope="row"><?php echo '1'; ?></th>
 							<td><?php echo $this->data['agent'][0]->phone_model; ?></td>
-							<td><?php echo $this->data['agent'][0]->imei; ?></td>
-							<td><?php echo $this->data['agent'][0]->num; ?></td>
+							<td id="phone"><?php echo $this->data['agent'][0]->imei; ?></td>
+							<td id="sim"><?php echo $this->data['agent'][0]->num; ?></td>
 							<td><?php echo $this->data['agent'][0]->iccid; ?></td>
 						</tr>
 					</tbody>
 				</table>
 				<!-- discharge agent -->
-				<form class="mb-5 border col-6 mt-5 p-2" method="post" action="<?php echo INCL_PATH.'Charges/discharge'; ?>">
+				<form id="discharge_form" class="mb-5 border col-6 mt-5 p-2" method="post" action="<?php echo INCL_PATH.'Charges/discharge'; ?>">
 					<!-- textarea for comment -->
 					<div class="form-group">
 					    <label for="comment">Komentar</label>
@@ -91,5 +91,11 @@
 							</label>
 						</div>
 					</div>
+					<input type="hidden" name="agent" value="<?php echo $this->data['agent'][0]->agent; ?>">
+					<input type="hidden" name="off_num" value="<?php echo $this->data['agent'][0]->off_num; ?>">
+					<input type="hidden" name="terminal_num" value="<?php echo $this->data['agent'][0]->terminal_num; ?>">
+					<input type="hidden" name="sim_num" value="<?php echo $this->data['agent'][0]->num; ?>">
+					<input type="hidden" name="imei" value="<?php echo $this->data['agent'][0]->imei; ?>">
+					<input type="hidden" name="phone_model" value="<?php echo $this->data['agent'][0]->phone_model; ?>">
 					<input type="submit" class="btn btn-primary mt-2" value="Razduži">
 				</form>

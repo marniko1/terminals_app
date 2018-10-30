@@ -36,10 +36,26 @@ class DBTerminals extends DB {
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredTerminalsNum ($cond) {
-		$sql = "select tn.terminal_num from terminals_num as tn 
+		$sql = "select tn.terminal_num as ajax_data from terminals_num as tn 
 		left join terminals as t 
 		on tn.id = t.terminals_num_id 
 		where t.terminals_num_id is null and cast(tn.terminal_num as character varying(5)) like '%$cond%' order by tn.terminal_num limit 6";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function getFilteredTerminals ($cond) {
+		$sql = "select tn.terminal_num as ajax_data from terminals_num as tn 
+		left join terminals as t 
+		on tn.id = t.terminals_num_id 
+		left join terminals_charges as tc 
+		on tc.terminal_id = t.id and tc.id = (select max(id) from terminals_charges where terminal_id = tc.terminal_id)
+		left join terminals_charges_off as tco 
+		on tco.terminal_charge_id = tc.id 
+		where t.terminals_num_id is not null 
+
+		and case when tc.id is not null then tco.id is not null else true end 
+
+		and cast(tn.terminal_num as character varying(5)) like '%$cond%' 
+		order by tn.terminal_num limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function addNewTerminal($terminal_num, $pda, $printer, $sim){

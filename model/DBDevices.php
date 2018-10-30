@@ -23,7 +23,7 @@ class DBDevices extends DB {
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredPDA ($cond) {
-		$sql = "select d.sn from devices as d 
+		$sql = "select d.sn  as ajax_data from devices as d 
 		left join terminals as t 
 		on d.id = t.pda_id or  d.id = t.printer_id 
 		left join devices_locations as dl 
@@ -34,7 +34,7 @@ class DBDevices extends DB {
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredPrinter ($cond) {
-		$sql = "select d.sn from devices as d 
+		$sql = "select d.sn  as ajax_data from devices as d 
 		left join terminals as t 
 		on d.id = t.pda_id or  d.id = t.printer_id 
 		left join devices_locations as dl 
