@@ -16,6 +16,7 @@ if (Auth::logged()) {
 	Route::get('/Devices/{id}', 'Devices@showSingleDevice', $req = ['/^\d+$/']);
 
 	Route::get('/SIMs/index', 'SIMs@index');
+	Route::get('/SIMs/{id}', 'SIMs@showSingleSIM', $req = ['/^\d+$/']);
 
 	Route::get('/Phones/index', 'Phones@index');
 	Route::get('/Phones/panel', 'Phones@showPageNumTwo');

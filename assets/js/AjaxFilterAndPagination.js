@@ -97,7 +97,6 @@ class FilterAndPagination{
 
 					httpReq.onreadystatechange = function(){
 						if (httpReq.readyState == 4){
-							console.log(this.responseText);
 							var response = JSON.parse(this.responseText);
 							if (response[0].length > 0) {
 								var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);

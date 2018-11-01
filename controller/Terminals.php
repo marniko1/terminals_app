@@ -16,7 +16,7 @@ class Terminals extends BaseController {
 		$this->show_view('terminal');
 	}
 	public function addNewTerminal ($terminal_num, $pda, $printer, $sim) {
-		$req = DBTerminals::addNewTerminal($terminal_num, $pda, $printer, $sim);
+		$req = DBTerminals::addNewTerminal($terminal_num, $pda, $printer, $sim, $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {
 			Msg::createMessage("msg1", "Success.");
@@ -26,7 +26,7 @@ class Terminals extends BaseController {
 		header("Location: ".INCL_PATH."Terminals/panel");
 	}
 	public function removeTerminal ($id) {
-		$req = DBTerminals::removeTerminal($id);
+		$req = DBTerminals::removeTerminal($id, $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {
 			Msg::createMessage("msg1", "Success.");

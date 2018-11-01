@@ -5,6 +5,10 @@ class DBSIM extends DB {
 		$sql = "select *, (select count(*) from sim_cards) as total from sim_cards order by num limit ".PG_RESULTS. "offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
+	public static function getSingleSIM ($sim_id) {
+		$sql = "select * from sim_cards where id = $sim_id";
+		return self::queryAndFetchInObj($sql);
+	}
 	public static function getFilteredSIMForPDA ($cond) {
 		$sql = "select sc.iccid as ajax_data from sim_cards as sc  
 		left join terminals as t 

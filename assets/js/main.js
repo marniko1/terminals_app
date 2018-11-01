@@ -20,9 +20,9 @@ window.onload = function() {
 
     	// add validation rules on fields
     	// make new charge fields validation rules
-    	frmvalidator.addValidation('terminal', ['req', 'minLength=5', 'maxLength=5', 'proposalValidation']);
-    	frmvalidator.addValidation('sim', ['req', 'minLength=4', 'maxLength=4', 'proposalValidation']);
-    	frmvalidator.addValidation('imei', ['req', 'minLength=20', 'maxLength=30', 'proposalValidation']);
+    	frmvalidator.addValidation('terminal', ['proposalValidation']);
+    	frmvalidator.addValidation('sim', ['proposalValidation']);
+    	frmvalidator.addValidation('imei', ['proposalValidation']);
     	// frmvalidator.addValidation('email', ['req', 'email']);
     	// add new_book fields validation rules
     	// frmvalidator.addValidation('title', ['req']);
@@ -119,6 +119,13 @@ window.onload = function() {
 			msg_span.addClass('text-success');
 		} else if (msg_span.text() == "Unsuccess.") {
 			msg_span.addClass('text-danger');
+		}
+	}
+	// **********************************************************************************************
+	// for single terminal page
+	if (url_part[0] == 'Terminals' && url_part[1].match(/^\d+$/)) {
+		if ($('span#location_span').text() == 'magacin') {
+			$('input[name="remove"]').attr('disabled', false);
 		}
 	}
 }

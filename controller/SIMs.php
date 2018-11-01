@@ -15,4 +15,8 @@ class SIMs extends BaseController {
 		$this->data['pagination_links'] = $this->preparePaginationLinks($total_sims_num, $pg);
 		$this->show_view('sims');
 	}
+	public function showSingleSIM($sim_id) {
+		$this->data['sim'] = DBSIM::getSingleSIM($sim_id);
+		$this->show_view('sim');
+	}
 }

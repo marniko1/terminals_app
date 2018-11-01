@@ -10,7 +10,7 @@ class Charges extends BaseController {
 	public function showPageNumTwo () {
 		$this->show_view('charges_page_2');
 	}
-	public function makeCharge ($off_num, $agent, $terminal_num, $sim_num = 0, $phone, $phone_model) {
+	public function makeCharge ($off_num, $agent, $terminal_num, $sim_num, $phone, $phone_model) {
 		$req = DBCharges::makeNewCharge($agent, $off_num, intval($terminal_num), intval($sim_num), $phone, $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {

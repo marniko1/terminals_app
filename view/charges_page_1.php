@@ -21,6 +21,7 @@
 					<div class="col-12 form-inline mt-5 border p-2">
 						<div class="form-group ml-2">
 							<label class="mr-1" for="terminal">Terminal: </label>
+							<input type="hidden" name="terminal" value="0">
 							<input type="number" name="terminal" id="terminal" class="form-control col-5 proposal-input" disabled>
 							<div class="proposals d-none">
 								<ul class="mb-0 pl-0"></ul>
@@ -28,6 +29,7 @@
 						</div>
 						<div class="form-group ml-2">
 							<label class="mr-1" for="sim">SIM: </label>
+							<input type="hidden" name="sim" value="0">
 							<input type="number" name="sim" id="sim" class="form-control col-5 proposal-input" disabled>
 							<div class="proposals d-none">
 								<ul class="mb-0 pl-0"></ul>
@@ -35,18 +37,19 @@
 						</div>
 						<div class="form-group ml-2">
 							<label class="mr-1" for="imei">Telefon IMEI: </label>
+							<input type="hidden" name="imei" value="">
 							<input type="text" name="imei" id="imei" class="form-control proposal-input" disabled>
 							<div class="proposals d-none">
 								<ul class="mb-0 pl-0"></ul>
 							</div>
 						</div>
 						<div class="form-group ml-2">
+							<input type="hidden" name="model" id="model_hidden" value="">
 							<input type="text" name="model" id="model" class="form-control" disabled>
-							<input type="hidden" name="model" id="model_hidden">
 						</div>
 					</div>
 					<div class="form-group row ml-5 mt-5">
-						<input type="submit" name="submit" id="submit" value="Potvrdi" class="btn btn-primary submit" disabled="">
+						<input type="submit" id="submit_btn" value="Potvrdi" class="btn btn-primary submit_btn" disabled>
 					</div>
 					<?php echo (isset($this->data['msg']['msg1'])) ? "<span class='text-danger'>" . $this->data['msg']['msg1'] . "</span>" : false ?>
 				</form>

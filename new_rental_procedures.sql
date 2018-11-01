@@ -1,7 +1,7 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-create or replace function INSERT_NEW_TERMINAL (_terminal_num integer, _pda character varying(13), _printer character varying(13), _iccid character varying(21))
+create or replace function INSERT_NEW_TERMINAL (_terminal_num integer, _pda character varying(13), _printer character varying(13), _iccid character varying(21), _user_id integer)
 returns void as
 $$
 	DECLARE
@@ -17,7 +17,7 @@ $$
 	select id from devices where sn = _printer into printer_id;
 	select id from sim_cards where iccid = _iccid into sim_cards_id;
 
-	insert into terminals values (default, terminals_num_id, pda_id, printer_id, sim_cards_id);
+	insert into terminals values (default, terminals_num_id, pda_id, printer_id, sim_cards_id, default, _user_id);
 
 	END;
 $$

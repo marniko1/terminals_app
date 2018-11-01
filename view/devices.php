@@ -2,7 +2,43 @@
 			<div class="row">
 				<h1>DEVICES</h1>
 				<form class="mt-2 col-12 mb-5">
-					<input type="text" name="filter" placeholder="Filter" id="filter">
+					<div class="form-group">
+						<input type="text" name="filter" placeholder="Filter" id="filter">
+					</div>
+					<div class="mt-2 row">
+						<div class="form-group form-group-inline col-2">
+					      	<select id="inputState" class="form-control" name="type">
+					        	<option value="/">Tip...</option>
+					        	<option value="pda">PDA</option>
+					        	<option value="printer">Štampač</option>
+					      	</select>
+					    </div>
+						<div class="form-group form-group-inline col-2">
+					      	<select id="inputState" class="form-control" name="model">
+					        	<option value="/">Model...</option>
+					        	<option value="">...</option>
+					      	</select>
+					    </div>
+					    <div class="form-group form-group-inline col-2">
+					      	<select id="inputState" class="form-control" name="location">
+					        	<option value="/">Lokacija...</option>
+					        	<option value="">...</option>
+					      	</select>
+					    </div>
+					    <div class="form-group form-group-inline col-2">
+					      	<select id="inputState" class="form-control" name="software_v">
+					        	<option value="/">Software v...</option>
+					        	<option value="">...</option>
+					      	</select>
+					    </div>
+					    <div class="form-check form-check-inline">
+					    	<input type="hidden" name="discharged" value="0">
+					      	<input class="form-check-input" type="checkbox" id="discharged" name="discharged" value="1">
+					      	<label class="form-check-label" for="discharged">
+					        	Otpisan
+					      	</label>
+					    </div>
+					</div>
 				</form>
 				<?php
 				// var_dump($this->data['devices']);

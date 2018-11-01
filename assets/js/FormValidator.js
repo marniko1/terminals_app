@@ -112,7 +112,7 @@ class Validator {
 		return true;
 	}
 	minLength(field, rule){
-		if ($(field).val().trim().length < rule) {
+		if ($(field).val().trim().length < rule && $(field).val().trim().length >= 1) {
 			return false;
 		}
 		return true;

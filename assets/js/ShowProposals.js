@@ -28,7 +28,6 @@ class ShowProposals {
 					var fn = 'phone';
 					$('#model, #model_hidden').val('');
 				}
-				console.log(fn);
 				
 				setTimeout(function(){
 					$.ajax({
@@ -37,7 +36,6 @@ class ShowProposals {
 						data: "ajax_fn=" + fn + "Filter&search_value=" + filter_value,
 						success: function(data){
 							var response = JSON.parse(data);
-							console.log(response);
 							var div_html = '';
 							$.each(response, function(i, val){
 								// adding model if proposals are for phone
@@ -47,32 +45,18 @@ class ShowProposals {
 									div_html += `<li class="pl-1">${response[i].ajax_data}</li>`;
 								}
 							});
-							// if (label_text == 'Broj terminala: ') {
-							// 	$.each(response, function(i, val){
-							// 		div_html += `<li class="pl-1">${response[i].terminal_num}</li>`
-							// 	});
-							// } else if (label_text == 'PDA: ' || label_text == 'Štampač: ') {
-							// 	$.each(response, function(i, val){
-							// 		div_html += `<li class="pl-1">${response[i].sn}</li>`
-							// 	});
-							// } else if (label_text == 'SIM: ') {
-							// 	$.each(response, function(i, val){
-							// 		div_html += `<li class="pl-1">${response[i].iccid}</li>`
-							// 	});
-							// }
-
 							// for validation make attr data-validate
 							// ***************************************************
-							// $.each(response, function(key, value){
-							// 	if (value.writer == filter_value || value.title == filter_value || value.client == filter_value) {
-							// 		input_text = true;
-							// 	};
-							// });
-							// if (!input_text) {
-							// 	$(self).attr('data-validate', 'false');
-							// } else {
-							// 	$(self).attr('data-validate', 'true');
-							// }
+							$.each(response, function(key, value){
+								if (value.ajax_data == filter_value) {
+									input_text = true;
+								};
+							});
+							if (!input_text) {
+								$(self).attr('data-validate', 'false');
+							} else {
+								$(self).attr('data-validate', 'true');
+							}
 							// ***************************************************
 
 
@@ -87,12 +71,11 @@ class ShowProposals {
 								var text = $(this).text();
 								$(self).val(text);
 								// set that input is valid
-								// $(self).attr('data-validate', 'true');
+								$(self).attr('data-validate', 'true');
 								$(this).parents('.mt-5').find('.proposals').addClass('d-none');
 								// adding model if proposals are for phone
 								if (fn == 'phone') {
 									$('#model, #model_hidden').val($(this).data('model'));
-									// $('#model_hidden').val($(this).data('model'));
 								}
 							});
 						},
@@ -106,13 +89,6 @@ class ShowProposals {
 			}
 		});
 	}
-	// hideOptionDiv() {
-	// 	jQuery('.proposal-input').focusout(function(e){
-	// 		setTimeout(function(){
-	// 			$(e.target).parents('.mt-5').find('.proposals').addClass('d-none');
-	// 		}, 300);
-	// 	});
-	// }
 	hideOptionDiv() {
 		jQuery('html').on('click', function(e){
 				var div = $(e.target).parents('.form-group').find('.proposals');
@@ -126,7 +102,6 @@ class ShowProposals {
 	takeLiValueInInput() {
 		jQuery('.proposal li').on('click', function(e){
 			var li_text = $(e.target).text();
-			console.log(li_text);
 		});
 	}
 }

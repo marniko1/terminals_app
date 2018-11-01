@@ -47,7 +47,7 @@ class DBDevices extends DB {
 	public static function getFilteredDevices ($cond_name, $cond, $skip) {
 		$sql = "select d.*, l.title as location, 
 		(select count(*) from devices where 
-		cast(sn as character varying(30)) like '%$cond%' 
+		lower(cast(sn as character varying(30))) like lower('%$cond%') 
 		or lower(nav_num) like lower('%$cond%')) 
 		as total 
 		from devices as d 
@@ -55,7 +55,7 @@ class DBDevices extends DB {
 		on d.id = dl.device_id 
 		join locations as l 
 		on dl.location_id = l.id 
-		where cast(d.sn as character varying(30)) like '%$cond%' 
+		where lower(cast(d.sn as character varying(30))) like lower('%$cond%') 
 		or lower(d.nav_num) like lower('%$cond%') 
 		order by d.sn limit " .PG_RESULTS. "offset $skip";
 		return self::queryAndFetchInObj($sql);

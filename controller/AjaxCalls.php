@@ -83,9 +83,17 @@ class AjaxCalls extends BaseController {
 		echo json_encode($response);
 	}
 
-	public function submitForm(){
-		
-	}
+	// public function submitForm(){
+	// 	$controller = $_POST['controller'];
+	// 	$method = $_POST['method'];
+	// 	$this->params = json_decode($_POST['params']);
+	// 	// this is ajax == true
+	// 	$this->params[] = true;
+	// 	include_once "controller/" . $controller . ".php";
+	// 	$controller = new $controller;
+	// 	$response = call_user_func_array([$controller, $method], $this->params);
+	// 	echo json_encode($response);
+	// }
 
 	public function ajaxResponse ($filtered_data) {
 		$total_num = 0;
