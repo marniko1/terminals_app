@@ -69,7 +69,10 @@ class AjaxCalls extends BaseController {
 	}
 
 	public function devicesFilter () {
-		$filtered_data = DBDevices::getFilteredDevices('device', $this->search_value, $this->skip);
+		$this->params = json_decode($_POST['params']);
+		// var_dump($_POST['params']->type);
+		// var_dump($this->params);die;
+		$filtered_data = DBDevices::getFilteredDevices('device', $this->search_value, $this->skip, $this->params->type, $this->params->model, $this->params->location, $this->params->software_v, $this->params->writed_off);
 		$this->ajaxResponse($filtered_data);
 	}
 
@@ -100,6 +103,7 @@ class AjaxCalls extends BaseController {
 		if (isset($filtered_data[0]->total)) {
 			$total_num = $filtered_data[0]->total;
 		}
+		// var_dump($total_num);die;
 		$pagination_data = $this->preparePaginationLinks($total_num, $this->pg);
 		$response = [$filtered_data, $pagination_data, $this->skip];
 		echo json_encode($response);

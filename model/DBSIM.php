@@ -13,7 +13,9 @@ class DBSIM extends DB {
 		$sql = "select sc.iccid as ajax_data from sim_cards as sc  
 		left join terminals as t 
 		on sc.id = t.sim_cards_id 
-		where t.sim_cards_id is null and sc.purpose = 'pda' and sc.iccid like '%$cond%' order by sc.id limit 6";
+		left join terminals_disassembled as td 
+		on td.terminal_id = t.id 
+		where (t.sim_cards_id is null or td.id is not null) and sc.purpose = 'pda' and sc.iccid like '%$cond%' order by sc.id limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredSIM ($cond) {

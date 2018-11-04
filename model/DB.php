@@ -28,6 +28,7 @@ class DB {
 	}
 	public static function queryAndFetchInObj($sql) {
 		$res = self::executeSQL($sql);
+		self::$data = [];
 		foreach ($res as $row) {
 			self::$data[] = $row;
 		}

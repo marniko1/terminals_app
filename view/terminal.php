@@ -15,7 +15,6 @@
 					      	<th scope="col" style="width: auto;">Br.OS Štampač</th>
 					      	<th scope="col" style="width: auto;">MTS broj</th>
 					      	<th scope="col" style="width: auto;">ICCID</th>
-					      	<th scope="col" style="width: auto;">Lokacija</th>
 						</thead>
 						<tbody class="tbody">
 							<tr>
@@ -27,7 +26,6 @@
 								<td><?php echo $this->data['terminal'][0]->printer_nav_num; ?></td>
 								<td><?php echo $this->data['terminal'][0]->num; ?></td>
 								<td><?php echo $this->data['terminal'][0]->iccid; ?></td>
-								<td><?php echo $this->data['terminal'][0]->location; ?></td>
 							</tr>
 						</tbody>
 					</table>
@@ -36,14 +34,18 @@
 						<input type="submit" name="remove" value="Remove" class="btn btn-danger remove" disabled>
 					</div>
 				</form>
-				<span class="col-12 mt-5">Trenutna lokacija: <?php echo '<span id="location_span">' . 
-				$this->data['terminal'][0]->location . 
-				"</span><a href='" . 
-				INCL_PATH.'Agents/' . 
-				$this->data['terminal'][0]->current_agent_id .
-				"'>" . 
-				$this->data['terminal'][0]->current_agent . 
-				"</a>"; ?></span>
+				<?php if (!$this->data['terminal'][0]->disassembled): ?>
+					<span class="col-12 mt-5">Trenutna lokacija: <?php echo '<span id="location_span">' . 
+					$this->data['terminal'][0]->location . 
+					"</span><a href='" . 
+					INCL_PATH.'Agents/' . 
+					$this->data['terminal'][0]->current_agent_id .
+					"'>" . 
+					$this->data['terminal'][0]->current_agent . 
+					"</a>"; ?></span>
+				<?php else: ?>
+					<span class="col-12 mt-5">Set je rasturen.</span>
+				<?php endif ?>
 				<table class="table table-sm mt-5">
 						<caption>Istorija zaduženja</caption>
 						<thead>

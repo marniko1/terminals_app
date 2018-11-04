@@ -2,7 +2,12 @@
 
 class DBTerminals extends DB {
 	public static function getAllTerminals() {
-		$sql = "select t.*, sc.network, sc.num, sc.iccid, d.sn as pda_sn, d.type as pda_type, d.nav_num as pda_nav_num, d1.sn as printer_sn, d1.type as printer_type, d1.nav_num as printer_nav_num, tn.terminal_num, l.title as location from terminals as t 
+		$sql = "select t.*, sc.network, sc.num, sc.iccid, d.sn as pda_sn, 
+
+		dt.title as pda_type, d.nav_num as pda_nav_num, d1.sn as printer_sn, 
+
+		dt1.title as printer_type, d1.nav_num as printer_nav_num, tn.terminal_num, l.title as location from terminals as t 
+
 		join sim_cards as sc 
 		on t.sim_cards_id = sc.id 
 		join devices as d 
@@ -15,6 +20,10 @@ class DBTerminals extends DB {
 		on dl.location_id = l.id 
 		join terminals_num as tn 
 		on tn.id = t.terminals_num_id 
+		join devices_types as dt 
+		on dt.id = d.device_type_id 
+		join devices_types as dt1 
+		on dt1.id = d1.device_type_id 
 		where t.id not in (select terminal_id from terminals_disassembled) 
 		order by tn.terminal_num
 		";
@@ -23,14 +32,22 @@ class DBTerminals extends DB {
 	public static function getSingleTerminal($terminal_id){
 		$sql = "select t.*, 
 		sc.network, sc.num, sc.iccid, 
-		d.sn as pda_sn, d.type as pda_type, d.nav_num as pda_nav_num, 
-		d1.sn as printer_sn, d1.type as printer_type, d1.nav_num as printer_nav_num, 
+		d.sn as pda_sn, 
+
+		dt.title as pda_type, d.nav_num as pda_nav_num, 
+		d1.sn as printer_sn, 
+
+		dt1.title as printer_type, d1.nav_num as printer_nav_num, 
+
 		tn.terminal_num, 
 		l.title as location, 
 		concat(initcap(a.first_name), ' ', initcap(a.last_name)) as agent,
 		concat(' ',initcap(a1.first_name), ' ', initcap(a1.last_name)) as current_agent, a1.id as current_agent_id, 
 		to_char(tc.date, 'DD Mon YYYY') as charge_date, 
-		to_char(tco.date, 'DD Mon YYYY') as charge_off_date 
+		to_char(tco.date, 'DD Mon YYYY') as charge_off_date, 
+
+		td.id as disassembled 
+
 		from terminals as t
 		join sim_cards as sc 
 		on t.sim_cards_id = sc.id 
@@ -44,8 +61,15 @@ class DBTerminals extends DB {
 		on dl.location_id = l.id 
 		join terminals_num as tn 
 		on tn.id = t.terminals_num_id 
+
+		join devices_types as dt 
+		on dt.id = d.device_type_id 
+		join devices_types as dt1 
+		on dt1.id = d1.device_type_id 
+
 		left join terminals_disassembled as td 
 		on t.id = td.terminal_id 
+
 		left join terminals_charges as tc 
 		on t.id = tc.terminal_id 
 		left join terminals_charges_off as tco 
@@ -60,10 +84,10 @@ class DBTerminals extends DB {
 	public static function getFilteredTerminalsNum ($cond) {
 		$sql = "select tn.terminal_num as ajax_data from terminals_num as tn 
 		left join terminals as t 
-		on tn.id = t.terminals_num_id 
+		on tn.id = t.terminals_num_id and t.id = (select max(id) from terminals where terminals_num_id = tn.id) 
 		left join terminals_disassembled as td 
 		on t.id = td.terminal_id
-		where (t.terminals_num_id is null or t.id in (select terminal_id from terminals_disassembled))
+		where (t.terminals_num_id is null or td.id is not null)
 		and cast(tn.terminal_num as character varying(5)) like '%$cond%' order by tn.terminal_num limit 6";
 		return self::queryAndFetchInObj($sql);
 	}

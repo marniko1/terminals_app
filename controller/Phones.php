@@ -9,7 +9,7 @@ class Phones extends BaseController {
 		$this->show_view('phones_page_1');
 	}
 	public function showPageNumTwo () {
-		$this->data['phones_models'] = DBPhonesModels::getAllPhoneModels();
+		$this->data['phones_models'] = DBModels::getAllModels();
 		$this->show_view('phones_page_2');
 	}
 	public function addNewPhone ($model_id, $imei) {

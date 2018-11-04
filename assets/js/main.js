@@ -8,9 +8,9 @@ window.onload = function() {
 	if (controller.match(/(\d+)/)) {
 		controller = window.location.href.split('/').reverse()[2].slice(0, -1);
 	}
-	var filter = document.getElementById('filter');
-	var pagination_links = document.querySelectorAll(".pagination li a");
-	var ajax = new FilterAndPagination(filter, pagination_links, controller);
+	var filter = $('#filter');
+	var pagination_links = $(".pagination li a");
+	new FilterAndPagination(filter, pagination_links, controller);
     // *************************************************************************************************
 	// stylize forms on home page
     if (window.location.pathname == '/terminals_app/Terminals/panel' || window.location.pathname == '/terminals_app/Charges/index') {

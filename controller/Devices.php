@@ -11,6 +11,10 @@ class Devices extends BaseController {
 			$skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
 		$this->data['devices'] = DBDevices::getAllDevices($skip);
+		$this->data['models'] = DBModels::getAllModels();
+		$this->data['types'] = DBTypes::getAllTypes();
+		$this->data['locations'] = DBLocations::getAllLocations();
+		$this->data['software_v'] = DBSoftwareVersions::getAllSoftwareV();
 		$total_devices_num = $this->data['devices'][0]->total;
 		$this->data['pagination_links'] = $this->preparePaginationLinks($total_devices_num, $pg);
 		$this->show_view('devices');

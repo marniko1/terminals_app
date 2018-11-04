@@ -1,40 +1,66 @@
 		<div class="container">
 			<div class="row">
 				<h1>DEVICES</h1>
+				<?php
+				// var_dump($this->data['models']);
+				// var_dump($this->data['devices']);
+				?>
 				<form class="mt-2 col-12 mb-5">
 					<div class="form-group">
 						<input type="text" name="filter" placeholder="Filter" id="filter">
 					</div>
-					<div class="mt-2 row">
+					<div class="mt-2 row params">
 						<div class="form-group form-group-inline col-2">
-					      	<select id="inputState" class="form-control" name="type">
-					        	<option value="/">Tip...</option>
-					        	<option value="pda">PDA</option>
-					        	<option value="printer">Štampač</option>
+					      	<select id="type" class="form-control" name="type">
+					        	<option value="">Tip...</option>
+					        	<?php
+					        	foreach ($this->data['types'] as $type) {
+					        	?>
+					        	<option value="<?php echo $type->id; ?>"><?php echo $type->title; ?></option>
+					        	<?php
+					        	}
+					        	?>
 					      	</select>
 					    </div>
 						<div class="form-group form-group-inline col-2">
-					      	<select id="inputState" class="form-control" name="model">
-					        	<option value="/">Model...</option>
-					        	<option value="">...</option>
+					      	<select id="model" class="form-control" name="model">
+					        	<option value="">Model...</option>
+					        	<?php
+					        	foreach ($this->data['models'] as $model) {
+					        	?>
+					        	<option value="<?php echo $model->id; ?>"><?php echo $model->title; ?></option>
+					        	<?php
+					        	}
+					        	?>
 					      	</select>
 					    </div>
 					    <div class="form-group form-group-inline col-2">
-					      	<select id="inputState" class="form-control" name="location">
-					        	<option value="/">Lokacija...</option>
-					        	<option value="">...</option>
+					      	<select id="location" class="form-control" name="location">
+					        	<option value="">Lokacija...</option>
+					        	<?php
+					        	foreach ($this->data['locations'] as $location) {
+					        	?>
+					        		<option value="<?php echo $location->id; ?>"><?php echo $location->title; ?></option>
+					        	<?php
+					        	}
+					        	?>
 					      	</select>
 					    </div>
 					    <div class="form-group form-group-inline col-2">
-					      	<select id="inputState" class="form-control" name="software_v">
-					        	<option value="/">Software v...</option>
-					        	<option value="">...</option>
+					      	<select id="software_v" class="form-control" name="software_v">
+					        	<option value="">Software v...</option>
+					        	<?php
+					        	foreach ($this->data['software_v'] as $software_v) {
+					        	?>
+					        		<option value="<?php echo $software_v->id; ?>"><?php echo $software_v->software; ?></option>
+					        	<?php
+					        	}
+					        	?>
 					      	</select>
 					    </div>
 					    <div class="form-check form-check-inline">
-					    	<input type="hidden" name="discharged" value="0">
-					      	<input class="form-check-input" type="checkbox" id="discharged" name="discharged" value="1">
-					      	<label class="form-check-label" for="discharged">
+					      	<input class="form-check-input" type="checkbox" id="writed_off" name="writed_off" value="1">
+					      	<label class="form-check-label" for="writed_off">
 					        	Otpisan
 					      	</label>
 					    </div>

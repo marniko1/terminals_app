@@ -20,6 +20,7 @@
 				      	<th scope="col" style="width: auto;">Br.OS Štampač</th>
 				      	<th scope="col" style="width: auto;">MTS broj</th>
 				      	<th scope="col" style="width: auto;">ICCID</th>
+				      	<th scope="col" style="width: auto;">Datum zaduženja</th>
 					</thead>
 					<tbody class="tbody">
 						<tr>
@@ -31,6 +32,7 @@
 							<td><?php echo $this->data['agent'][0]->printer_nav_num; ?></td>
 							<td><?php echo $this->data['agent'][0]->pda_sim; ?></td>
 							<td><?php echo $this->data['agent'][0]->pda_sim_iccid; ?></td>
+							<td><?php echo $this->data['agent'][0]->terminal_charge_date; ?></td>
 						</tr>
 					</tbody>
 				</table>
