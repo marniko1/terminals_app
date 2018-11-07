@@ -1,6 +1,5 @@
 		<div class="container">
 			<div class="row">
-				<h1>PHONES</h1>
 				<nav class="navbar col-12 row">
 					<ul class="nav col-12 justify-content-center">
 						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Phones/index';?>">Lista telefona</a></li>
@@ -10,9 +9,6 @@
 				<form class="mt-2 col-12 mb-5">
 					<input type="text" name="filter" placeholder="Filter" id="filter">
 				</form>
-				<?php
-				// var_dump($this->data['phones']);
-				?>
 				<table class="col-12 table table-sm">
 					<caption>Lista mobilnih telefona</caption>
 					<thead>

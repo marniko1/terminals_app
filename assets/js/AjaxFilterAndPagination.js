@@ -137,66 +137,66 @@ class FilterAndPagination{
 		//                testing
 		// 
 		// ************************************************************************** //
-		$('.params select, input').on('change', function (){
+		$('.params select').on('click', function (){
 			var pagination = $('.pagination');
-				var filter_value = filter.val().trim();
-				pagination.removeClass('invisible');
-				if ($('.pagination li.active')) {
-					$('.pagination li.active').removeClass('active');
-				}
-				// **************************************************************
-				// var params_holders_ids = ['#type', '#model', '#location', '#software_v', '#writed_off'];
-				params = self.collectParams();
-				
-				// console.log(params);
-				// **************************************************************
-				var pg = 1;
-				$.ajax({
-					type: "POST",
-					url: root_url + "AjaxCalls/index",
-					data: "ajax_fn=" + controller.toLowerCase() + "Filter&search_value=" + filter_value + '&pg=' + pg + "&params=" + JSON.stringify(params),
-					success: function(data){
-						var response = JSON.parse(data);
-						if (response[0].length > 0) {
-							var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);
-							if (response[1].length == pagination_links.length) {
-								self.paginationLinksChangeIfNoDiff(response[1], pagination_links);
-							} else {
-								// difference begins here
-								var display_none_counter = 0;
-								for (var i = 0; i < pagination_links.length; i++) {
-									if ($(pagination_links[i]).hasClass('d-none')) {
-										display_none_counter++;
-									}
-								}
-								if (response[1].length - (pagination_links.length - display_none_counter) > 0) {	
-									for (var i = pagination_links.length - display_none_counter; i <= response[1].length; i++) {
-										$(pagination_links[i-1]).removeClass('d-none');
-										$(pagination_links[i]).addClass('d-none');
-									}
-								} else {
-									for (var i = pagination_links.length - 1; i >= response[1].length; i--) {
-										$(pagination_links[i-1]).removeClass('d-none');
-										$(pagination_links[i]).addClass('d-none');
-									}
-								}
-								for (var i = 0; i < response[1].length; i++) {
-									$(pagination_links[i]).attr('href', response[1][i][0]);
-									$(pagination_links[i]).text(response[1][i][1]);
+			var filter_value = filter.val().trim();
+			pagination.removeClass('invisible');
+			if ($('.pagination li.active')) {
+				$('.pagination li.active').removeClass('active');
+			}
+			// **************************************************************
+			// var params_holders_ids = ['#type', '#model', '#location', '#software_v', '#writed_off'];
+			params = self.collectParams();
+			
+			// console.log(params);
+			// **************************************************************
+			var pg = 1;
+			$.ajax({
+				type: "POST",
+				url: root_url + "AjaxCalls/index",
+				data: "ajax_fn=" + controller.toLowerCase() + "Filter&search_value=" + filter_value + '&pg=' + pg + "&params=" + JSON.stringify(params),
+				success: function(data){
+					var response = JSON.parse(data);
+					if (response[0].length > 0) {
+						var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);
+						if (response[1].length == pagination_links.length) {
+							self.paginationLinksChangeIfNoDiff(response[1], pagination_links);
+						} else {
+							// difference begins here
+							var display_none_counter = 0;
+							for (var i = 0; i < pagination_links.length; i++) {
+								if ($(pagination_links[i]).hasClass('d-none')) {
+									display_none_counter++;
 								}
 							}
-							// difference ends here
-							self.finalAjaxDOMChanges(pagination_links, pg, tbody_html, tbody)
-							// difference begins here
-						} else {
-							tbody.html('<tr><td colspan="6">No search results.</td></tr>');
-							$(pagination).addClass('invisible');
+							if (response[1].length - (pagination_links.length - display_none_counter) > 0) {	
+								for (var i = pagination_links.length - display_none_counter; i <= response[1].length; i++) {
+									$(pagination_links[i-1]).removeClass('d-none');
+									$(pagination_links[i]).addClass('d-none');
+								}
+							} else {
+								for (var i = pagination_links.length - 1; i >= response[1].length; i--) {
+									$(pagination_links[i-1]).removeClass('d-none');
+									$(pagination_links[i]).addClass('d-none');
+								}
+							}
+							for (var i = 0; i < response[1].length; i++) {
+								$(pagination_links[i]).attr('href', response[1][i][0]);
+								$(pagination_links[i]).text(response[1][i][1]);
+							}
 						}
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-				     	alert("some error"+errorThrown);
-				 	}
-				});
+						// difference ends here
+						self.finalAjaxDOMChanges(pagination_links, pg, tbody_html, tbody)
+						// difference begins here
+					} else {
+						tbody.html('<tr><td colspan="6">No search results.</td></tr>');
+						$(pagination).addClass('invisible');
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+			     	alert("some error"+errorThrown);
+			 	}
+			});
 
 		});
 		// 
@@ -250,9 +250,7 @@ class FilterAndPagination{
 			params_holders_ids.push('#' + $(element).attr('id'));
 		});
 		$.each(params_holders_ids, function(key, param){
-			// if ($(param).val() != 0 && $(param).is('select') || $(param).is(':checked')) {
-				params[param.replace('#', '')] = $(param).val();
-			// }
+			params[param.replace('#', '')] = $(param).val();
 		});
 		return params;
 	}

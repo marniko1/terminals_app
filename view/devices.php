@@ -1,10 +1,5 @@
 		<div class="container">
 			<div class="row">
-				<h1>DEVICES</h1>
-				<?php
-				// var_dump($this->data['models']);
-				// var_dump($this->data['devices']);
-				?>
 				<form class="mt-2 col-12 mb-5">
 					<div class="form-group">
 						<input type="text" name="filter" placeholder="Filter" id="filter">
@@ -58,17 +53,15 @@
 					        	?>
 					      	</select>
 					    </div>
-					    <div class="form-check form-check-inline">
-					      	<input class="form-check-input" type="checkbox" id="writed_off" name="writed_off" value="1">
-					      	<label class="form-check-label" for="writed_off">
-					        	Otpisan
-					      	</label>
+					    <div class="form-group form-group-inline col-2">
+					      	<select id="active" class="form-control" name="active">
+					        	<option value="">Status...</option>
+					        	<option value="1">aktivni</option>
+					        	<option value="2">otpisan</option>
+					      	</select>
 					    </div>
 					</div>
 				</form>
-				<?php
-				// var_dump($this->data['devices']);
-				?>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="col-12 table table-sm">
 						<caption>Lista terminala</caption>

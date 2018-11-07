@@ -67,3 +67,18 @@ table.client_book{
 table.main tr td div {
 	margin-bottom: 0;
 }
+.customLegend {
+  border: 1px solid #e5e5e5;
+  padding: 2em 0 1em;
+  margin-top: 2em;
+  position: relative;
+}
+.customLegend legend {
+  border: 0;
+  background: #fff;
+  width: auto;
+  transform: translateY(-50%);
+  position: absolute;
+  top: 0; left: 1em;
+  padding: 0 .5em;
+}

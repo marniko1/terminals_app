@@ -41,7 +41,7 @@ class Validator {
 								self.errMsg = self.createErrMsg(rule);
 								$(field).addClass('err-border');
 								if ($(field).next('span.text-danger').length == 0) {
-									$(field).after('<span class="val text-danger position-absolute mt-1"><small>' + self.errMsg + '</small></span>');
+									$(field).after('<span class="val text-danger position-absolute mt-4"><small>' + self.errMsg + '</small></span>');
 								}
 								self.isValid = false;
 							}
@@ -50,7 +50,7 @@ class Validator {
 								self.errMsg = self.createErrMsg(rule.split('=')[0], rule.split('=')[1]);
 								$(field).addClass('err-border');
 								if ($(field).next('span.text-danger').length == 0) {
-									$(field).after('<span class="val text-danger position-absolute mt-1"><small>' + self.errMsg + '</small></span>');
+									$(field).after('<span class="val text-danger position-absolute mt-4"><small>' + self.errMsg + '</small></span>');
 								}
 								self.isValid = false;
 							}

@@ -1,14 +1,7 @@
 		<div class="container">
 			<div class="row">
-				<h1>CHARGES</h1>
-				<nav class="navbar col-12 row">
-					<ul class="nav col-12 justify-content-center">
-						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Charges/index';?>">Zaduženje</a></li>
-						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'Charges/panel';?>">Razduženje</a></li>
-					</ul>
-				</nav>
 				<form class="mt-5 row border rounded p-2" method="post" action="<?php echo INCL_PATH.'Charges/makeCharge'; ?>">
-					<div class="col-12 form-inline border p-2">
+					<div class="col-12 form-inline border p-2 mt-5">
 						<div class="form-group row ml-2">
 							<label class="mr-1" for="off_num">Službeni broj: </label>
 							<input type="number" name="off_num" id="off_num" class="form-control col-4">
@@ -29,8 +22,8 @@
 						</div>
 						<div class="form-group ml-2">
 							<label class="mr-1" for="sim">SIM: </label>
-							<input type="hidden" name="sim" value="0">
-							<input type="number" name="sim" id="sim" class="form-control col-5 proposal-input" disabled>
+							<input type="hidden" name="sim_for_charge" value="0">
+							<input type="number" name="sim_for_charge" id="sim_for_charge" class="form-control col-5 proposal-input" disabled>
 							<div class="proposals d-none">
 								<ul class="mb-0 pl-0"></ul>
 							</div>

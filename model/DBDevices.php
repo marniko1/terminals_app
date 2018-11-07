@@ -88,7 +88,10 @@ class DBDevices extends DB {
 		where (t.printer_id is null or td.id is not null) and l.title = 'magacin' and dt.title = 'printer' and dwo.id is null and lower(cast(d.sn as character varying(30))) like lower('%$cond%') order by d.id limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
-	public static function getFilteredDevices ($cond_name, $cond, $skip, $type_id, $model_id, $location_id, $software_v_id) {
+	public static function getFilteredDevices ($cond_name, $cond, $skip, $sql_addon) {
+		// ini_set("xdebug.var_display_max_children", -1);
+		// ini_set("xdebug.var_display_max_data", -1);
+		// ini_set("xdebug.var_display_max_depth", -1);
 		$sql = "select d.sn, d.nav_num, d.id, 
 		m.title as model, 
 		dt.title as type, 
@@ -96,12 +99,25 @@ class DBDevices extends DB {
 		dwo.id as writed_off, 
 		l.title as location, 
 
-		(select count(*) from devices as d_s 
-		join devices_types as dt_s 
-		on dt_s.id = d_s.device_type_id 
+		(select count(*) from devices as d 
+
+		join devices_locations as dl 
+		on d.id = dl.device_id 
+		join locations as l 
+		on dl.location_id = l.id 
+		
+		join devices_types as dt 
+		on dt.id = d.device_type_id 
+		join models as m 
+		on m.id = d.model_id 
+		left join devices_softwares as dsw 
+		on dsw.device_id = d.id and dsw.id = (select max(id) from devices_softwares where device_id = d.id) 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+
 		where 
-		(lower(cast(d_s.sn as text)) like lower('%$cond%') 
-		or lower(d_s.nav_num) like lower('%$cond%')) and cast(dt_s.id as text) like '%$type_id%') 
+		(lower(cast(d.sn as text)) like lower('%$cond%') 
+		or lower(d.nav_num) like lower('%$cond%')) " . $sql_addon . ") 
 		as total 
 
 
@@ -124,9 +140,40 @@ class DBDevices extends DB {
 		left join devices_writes_off as dwo 
 		on dwo.device_id = d.id 
 		where (lower(cast(d.sn as character varying(30))) like lower('%$cond%') 
-		or lower(d.nav_num) like lower('%$cond%')) 
-		and cast(dt.id as text) like '%$type_id%' 
-		order by d.sn limit " .PG_RESULTS. "offset $skip";
+		or lower(d.nav_num) like lower('%$cond%')) " . 
+		$sql_addon
+		. "	order by d.sn limit " .PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
 }
+
+// select d.sn, d.nav_num, d.id, 
+// m.title as model, 
+// dt.title as type, 
+// swv.software as sw_ver, 
+// dwo.id as writed_off, 
+// l.title as location, 
+// 	(select count(*) from devices as d_s 
+// 		join devices_types as dt_s 
+// 		on dt_s.id = d_s.device_type_id 
+// 		where (lower(cast(d_s.sn as text)) like lower('%%') or lower(d_s.nav_num) like lower('%%')) 
+// 		and cast(dt.id as text) = '2'  and cast(m.id as text) = '5' ) as total 
+// from devices as d 
+
+// join devices_locations as dl 
+// on d.id = dl.device_id 
+// join locations as l 
+// on dl.location_id = l.id 
+// join models as m 
+// on m.id = d.model_id 
+// join devices_types as dt 
+// on dt.id = d.device_type_id 
+// left join devices_softwares as dsw 
+// on dsw.device_id = d.id and dsw.id = (select max(id) from devices_softwares where device_id = d.id) 
+// left join software_v as swv 
+// on swv.id = dsw.software_v_id 
+// left join devices_writes_off as dwo 
+// on dwo.device_id = d.id 
+// where (lower(cast(d.sn as character varying(30))) like lower('%%') or lower(d.nav_num) like lower('%%')) 
+// and cast(dt.id as text) = '1' and cast(m.id as text) = '5' and cast(l.id as text) = '1' and dwo.id is not null 
+// order by d.sn limit 10 offset 0

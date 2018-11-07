@@ -13,7 +13,7 @@
 	      <li class="nav-item"><a href="<?php echo INCL_PATH  . 'Charges/index'; ?>"  class="nav-link">Zaduženja</a></li>
 	      <li class="nav-item"><a href="<?php echo INCL_PATH  . 'Service/index'; ?>"  class="nav-link">Servis</a></li>
 	      <?php 
-	      // echo (Auth::admin()) ? '<li class="nav-item"><a href="'.INCL_PATH.'Admin/index" class="nav-link">Admin</a></li>' : false 
+	      echo (Auth::admin()) ? '<li class="nav-item"><a href="'.INCL_PATH.'Admin/index" class="nav-link">Admin</a></li>' : false 
 	      ?>
 	    </ul>
   	</div>

@@ -18,7 +18,7 @@ class DBSIM extends DB {
 		where (t.sim_cards_id is null or td.id is not null) and sc.purpose = 'pda' and sc.iccid like '%$cond%' order by sc.id limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
-	public static function getFilteredSIM ($cond) {
+	public static function getFilteredSIMForCharge ($cond) {
 		$sql = "select substr(cast(sc.num as text), 4) as ajax_data from sim_cards as sc 
 		left join sim_cards_charges as scc 
 		on scc.sim_id = sc.id and scc.id = (select max(id) from sim_cards_charges where sim_id = scc.sim_id)
@@ -32,13 +32,18 @@ class DBSIM extends DB {
 		order by sc.id limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
-	public static function getFilteredSIMs ($cond_name, $cond, $skip) {
+	public static function getFilteredSIMs ($cond_name, $cond, $skip, $sql_addon) {
 		$sql = "select id, concat('+', network, '/', num), iccid, purpose, 
-		(select count(*) from sim_cards where iccid like '%cond%' 
-		or cast(num as character varying(7)) like '%$cond%') as total 
+		(select count(*) from sim_cards where (cast(iccid as text) like '%$cond%' 
+		or cast(num as text) like '%$cond%') " . $sql_addon . ") as total 
 		from sim_cards 
-		where iccid like '%cond%' or cast(num as character varying(7)) like '%$cond%'
+		where (cast(iccid as text) like '%$cond%' or cast(num as character varying(7)) like '%$cond%') " . $sql_addon . "
 		order by num limit ".PG_RESULTS. "offset $skip";
 		return self::queryAndFetchInObj($sql);
+	}
+	public static function addNewSIM ($network, $num, $iccid, $purpose) {
+		$sql = "insert into sim_cards values (default, $network, $num, '$iccid', '$purpose')";
+		$req = self::executeSQL($sql);
+		return $req;
 	}
 }

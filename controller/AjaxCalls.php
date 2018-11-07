@@ -27,14 +27,14 @@ class AjaxCalls extends BaseController {
 		$method = $this->method;
 		$this->$method();
 	}
-
+// for proposals
 	public function terminalNumFilter () {
 		$response = DBTerminals::getFilteredTerminalsNum($this->search_value);
 		echo json_encode($response);
 	}
 
 	public function terminalFilter () {
-		$response = DBTerminals::getFilteredTerminals($this->search_value);
+		$response = DBTerminals::getFilteredTerminalsForCharge($this->search_value);
 		echo json_encode($response);
 	}
 
@@ -54,7 +54,7 @@ class AjaxCalls extends BaseController {
 	}
 
 	public function simFilter () {
-		$response = DBSIM::getFilteredSIM($this->search_value);
+		$response = DBSIM::getFilteredSIMForCharge($this->search_value);
 		echo json_encode($response);
 	}
 
@@ -62,22 +62,31 @@ class AjaxCalls extends BaseController {
 		$response = DBPhones::getFilteredPhones($this->search_value);
 		echo json_encode($response);
 	}
-
+// for filter and pagination
 	public function agentsFilter () {
 		$filtered_data = DBAgents::getFilteredAgents('agent', $this->search_value, $this->skip);
 		$this->ajaxResponse($filtered_data);
 	}
 
+	public function terminalsFilter () {
+		$this->params = json_decode($_POST['params']);
+		$sql_addon = $this->makeAdditionalConditionsStringSQL($this->params);
+		$filtered_data = DBTerminals::getFilteredTerminals('terminal', $this->search_value, $this->skip, $sql_addon);
+		$this->ajaxResponse($filtered_data);
+	}
+
 	public function devicesFilter () {
 		$this->params = json_decode($_POST['params']);
-		// var_dump($_POST['params']->type);
-		// var_dump($this->params);die;
-		$filtered_data = DBDevices::getFilteredDevices('device', $this->search_value, $this->skip, $this->params->type, $this->params->model, $this->params->location, $this->params->software_v, $this->params->writed_off);
+		$sql_addon = $this->makeAdditionalConditionsStringSQL($this->params);
+		$filtered_data = DBDevices::getFilteredDevices('device', $this->search_value, $this->skip, $sql_addon);
 		$this->ajaxResponse($filtered_data);
 	}
 
 	public function simsFilter () {
-		$filtered_data = DBSIM::getFilteredSIMs('sim', $this->search_value, $this->skip);
+		$this->params = json_decode($_POST['params']);
+		$sql_addon = $this->makeAdditionalConditionsStringSQL($this->params);
+		// var_dump($sql_addon);die;	
+		$filtered_data = DBSIM::getFilteredSIMs('sim', $this->search_value, $this->skip, $sql_addon);
 		$this->ajaxResponse($filtered_data);
 	}
 
@@ -103,9 +112,48 @@ class AjaxCalls extends BaseController {
 		if (isset($filtered_data[0]->total)) {
 			$total_num = $filtered_data[0]->total;
 		}
-		// var_dump($total_num);die;
 		$pagination_data = $this->preparePaginationLinks($total_num, $this->pg);
 		$response = [$filtered_data, $pagination_data, $this->skip];
 		echo json_encode($response);
+	}
+	public function makeAdditionalConditionsStringSQL ($params_obj) {
+		$sql_addon = '';
+		$table = '';
+		foreach ($params_obj as $key => $param) {
+			if ($param != '' && $key != 'active' && $key != 'sim_purpose') {
+				switch ($key) {
+					case 'type':
+						$table = 'dt';
+						break;
+
+					case 'model':
+						$table = 'm';
+						break;
+
+					case 'location':
+						$table = 'l';
+						break;
+
+					case 'software_v':
+						$table = 'swv';
+						break;
+					
+					default:
+						// do nothing here
+						break;
+				}
+				$sql_addon .= ' and ' . "cast($table.id as text) = '$param' ";
+			}
+			if ($key == 'sim_purpose' && $param != '') {
+				$sql_addon .= " and purpose = '$param' ";
+			}
+			if ($key == 'active' && $param == 1) {
+				$sql_addon .= " and dwo.id is null ";
+			} else if ($key == 'active' && $param == 2) {
+				$sql_addon .= " and dwo.id is not null ";
+			}
+			
+		}
+		return $sql_addon;
 	}
 }

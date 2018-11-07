@@ -1,6 +1,7 @@
 class Discharge {
 	constructor () {
 		this.disabler();
+		this.enableDischarge();
 	}
 	disabler () {
 		if ($('#terminal').text() == '') {
@@ -16,5 +17,14 @@ class Discharge {
 			$("#discharge_form").addClass("d-none");
 			$("input[type='submit']").attr("disabled", true);
 		}
+	}
+	enableDischarge () {
+		$('input[type="checkbox"]').on('change', function() {
+			if ($(this).is(':checked')) {
+				$('#discharge_btn').attr('disabled', false);
+			} else {
+				$('#discharge_btn').attr('disabled', true);
+			}
+		})
 	}
 }

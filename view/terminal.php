@@ -31,7 +31,7 @@
 					</table>
 					<input type="hidden" name="client_id" value="<?php echo $this->data['terminal'][0]->id; ?>">
 					<div class="btn-holder">
-						<input type="submit" name="remove" value="Remove" class="btn btn-danger remove" disabled>
+						<input type="submit" name="remove" value="Rastavi terminal" class="btn btn-danger remove" disabled>
 					</div>
 				</form>
 				<?php if (!$this->data['terminal'][0]->disassembled): ?>

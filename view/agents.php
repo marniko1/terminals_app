@@ -1,12 +1,8 @@
 		<div class="container">
 			<div class="row">
-				<h1>AGENTS</h1>
 				<form class="mt-2 col-12 mb-5">
 					<input type="text" name="filter" placeholder="Filter" id="filter">
 				</form>
-				<?php
-				// var_dump($this->data['agents']);
-				?>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="col-12 table table-sm">
 						<caption>Lista kontrolora</caption>

@@ -1,6 +1,5 @@
 		<div class="container">
 			<div class="row">
-				<h1>SIM</h1>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="col-12 table table-sm">
 						<caption>Lista sim kartica</caption>

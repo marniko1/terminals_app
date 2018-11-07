@@ -158,3 +158,4 @@ select MAKE_NEW_CHARGE('Aadam Ninković', 98998, 44002, 8822114, '', 1);
 select MAKE_NEW_CHARGE('Aadam Novković', 98997, 44003, 8822115, '356788068885730', 1);
 
 update devices_locations set location_id = 1 where location_id = 3;
+

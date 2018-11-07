@@ -1,6 +1,5 @@
 		<div class="container">
 			<div class="row">
-				<h1>OFFCHARGES</h1>
 				<nav class="navbar col-12 row">
 					<ul class="nav col-12 justify-content-center">
 						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Charges/index';?>">Zaduženje</a></li>

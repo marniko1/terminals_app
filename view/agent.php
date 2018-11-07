@@ -1,14 +1,8 @@
 		<div class="container">
 			<div class="row">
-				<?php
-				// var_dump($this->data['agent']);
-				?>
 				<div class="col-12 mb-5 mt-5">
 					<h2><?php echo $this->data['agent'][0]->agent; ?></h2> <small><?php echo $this->data['agent'][0]->off_num; ?></small>
 				</div>
-				<?php
-				// var_dump($this->data['agent']);
-				?>
 				<table class="table table-sm writers">
 					<caption>Zaduženi kontrolorski set</caption>
 					<thead>
@@ -99,5 +93,5 @@
 					<input type="hidden" name="sim_num" value="<?php echo $this->data['agent'][0]->num; ?>">
 					<input type="hidden" name="imei" value="<?php echo $this->data['agent'][0]->imei; ?>">
 					<input type="hidden" name="phone_model" value="<?php echo $this->data['agent'][0]->phone_model; ?>">
-					<input type="submit" class="btn btn-primary mt-2" value="Razduži">
+					<input type="submit" class="btn btn-primary mt-2" id="discharge_btn" value="Razduži" disabled>
 				</form>

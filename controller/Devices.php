@@ -11,7 +11,7 @@ class Devices extends BaseController {
 			$skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
 		$this->data['devices'] = DBDevices::getAllDevices($skip);
-		$this->data['models'] = DBModels::getAllModels();
+		$this->data['models'] = DBModels::getAllDevicesModels();
 		$this->data['types'] = DBTypes::getAllTypes();
 		$this->data['locations'] = DBLocations::getAllLocations();
 		$this->data['software_v'] = DBSoftwareVersions::getAllSoftwareV();

@@ -1,12 +1,16 @@
 <?php
 
 class DBTerminals extends DB {
-	public static function getAllTerminals() {
+	public static function getAllTerminals($skip) {
 		$sql = "select t.*, sc.network, sc.num, sc.iccid, d.sn as pda_sn, 
 
 		dt.title as pda_type, d.nav_num as pda_nav_num, d1.sn as printer_sn, 
 
-		dt1.title as printer_type, d1.nav_num as printer_nav_num, tn.terminal_num, l.title as location from terminals as t 
+		dt1.title as printer_type, d1.nav_num as printer_nav_num, tn.terminal_num, l.title as location, 
+
+		(select count(*) from terminals where id not in (select terminal_id from terminals_disassembled)) as total 
+
+		from terminals as t 
 
 		join sim_cards as sc 
 		on t.sim_cards_id = sc.id 
@@ -25,7 +29,7 @@ class DBTerminals extends DB {
 		join devices_types as dt1 
 		on dt1.id = d1.device_type_id 
 		where t.id not in (select terminal_id from terminals_disassembled) 
-		order by tn.terminal_num
+		order by tn.terminal_num limit ".PG_RESULTS. "offset $skip
 		";
 		return self::queryAndFetchInObj($sql);
 	}
@@ -91,7 +95,7 @@ class DBTerminals extends DB {
 		and cast(tn.terminal_num as character varying(5)) like '%$cond%' order by tn.terminal_num limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
-	public static function getFilteredTerminals ($cond) {
+	public static function getFilteredTerminalsForCharge ($cond) {
 		$sql = "select tn.terminal_num as ajax_data from terminals_num as tn 
 		left join terminals as t 
 		on tn.id = t.terminals_num_id 
@@ -109,25 +113,101 @@ class DBTerminals extends DB {
 		order by tn.terminal_num limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
+
+
+
+	public static function getFilteredTerminals ($cond_name, $cond, $skip, $sql_addon) {
+		$sql = "select tn.terminal_num, 
+		d.sn as pda_sn, d.nav_num as pda_nav_num, 
+		d1.sn as printer_sn, d1.nav_num as printer_nav_num, 
+		sc.num, sc.iccid, d.sn as pda_sn, 
+		l.title as location, 
+
+		(select count(*) from terminals where id not in (select terminal_id from terminals_disassembled) 
+		and 
+		(
+		cast(tn.terminal_num as text) like '%$cond%' 
+		or lower(cast(d.sn as text)) like lower('%$cond%') 
+		or lower(cast(d.nav_num as text)) like lower('%$cond%') 
+		or lower(cast(d1.sn as text)) like lower('%$cond%') 
+		or lower(cast(d1.nav_num as text)) like lower('%$cond%') 
+		)
+		" . $sql_addon . "
+		) as total 
+
+		from terminals as t 
+
+
+		join sim_cards as sc 
+		on t.sim_cards_id = sc.id 
+		join devices as d 
+		on t.pda_id = d.id 
+		join devices as d1 
+		on t.printer_id = d1.id 
+		join devices_locations as dl 
+		on d.id = dl.device_id 
+		join locations as l 
+		on dl.location_id = l.id 
+		join terminals_num as tn 
+		on tn.id = t.terminals_num_id 
+		join devices_types as dt 
+		on dt.id = d.device_type_id 
+		join devices_types as dt1 
+		on dt1.id = d1.device_type_id 
+		where t.id not in (select terminal_id from terminals_disassembled) 
+		and 
+		(
+		cast(tn.terminal_num as text) like '%$cond%' 
+		or lower(cast(d.sn as text)) like lower('%$cond%') 
+		or lower(cast(d.nav_num as text)) like lower('%$cond%') 
+		or lower(cast(d1.sn as text)) like lower('%$cond%') 
+		or lower(cast(d1.nav_num as text)) like lower('%$cond%') 
+		)
+		" . $sql_addon . "
+		order by tn.terminal_num limit ".PG_RESULTS. "offset $skip
+		";
+		return self::queryAndFetchInObj($sql);
+	}
+
+
+
+
+
 	public static function addNewTerminal($terminal_num, $pda, $printer, $sim, $user_id){
 		$sql = "select INSERT_NEW_TERMINAL($terminal_num, '$pda', '$printer', '$sim', $user_id)";
-		// var_dump($sql);die;
 		$req = self::executeSQL($sql);
 		return $req;
 	}
 	public static function removeTerminal($id, $user_id){
-		// var_dump($id);die;
-		// $sql = "delete from terminals where id = $id";
 		$sql = "insert into terminals_disassembled values (default, $id, default, $user_id)";
 		$req = self::executeSQL($sql);
 		return $req;
 	}
-	// public static function editUser($username, $full_name, $password, $priviledge, $user_id){
-	// 	$sql = "update users set username = '$username', full_name = '$full_name', password = '$password', priviledge = '$priviledge' where id = $user_id";
-	// 	self::executeSQL($sql);
-	// }
-	// public static function removeUser($user_id){
-	// 	$sql = "delete from users where id = $user_id";
-	// 	return self::executeSQL($sql);
-	// }
+	public static function countAllTerminals(){
+		$sql = "select count(*) as terminals_num from terminals as t 
+		where t.id not in (select terminal_id from terminals_disassembled)";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllTerminalsInStorage(){
+		$sql = "select count(*) as terminals_num_in_storage from terminals as t 
+		join devices as d 
+		on d.id = t.pda_id 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		join locations as l 
+		on l.id = dl.location_id 
+		where t.id not in (select terminal_id from terminals_disassembled) and l.id = 1";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllChargedTerminals(){
+		$sql = "select count(*) as charged_terminals_num from terminals as t 
+		join devices as d 
+		on d.id = t.pda_id 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		join locations as l 
+		on l.id = dl.location_id  
+		where t.id not in (select terminal_id from terminals_disassembled) and l.id = 3";
+		return self::queryAndFetchInObj($sql);
+	}
 }

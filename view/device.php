@@ -1,9 +1,5 @@
 		<div class="container">
 			<div class="row">
-				<h1>single DEVICE</h1>
-				<?php
-				// var_dump($this->data['device']);
-				?>
 				<table class="col-12 table table-sm mt-5">
 						<caption>Lista terminala</caption>
 						<thead>

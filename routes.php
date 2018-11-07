@@ -16,7 +16,9 @@ if (Auth::logged()) {
 	Route::get('/Devices/{id}', 'Devices@showSingleDevice', $req = ['/^\d+$/']);
 
 	Route::get('/SIMs/index', 'SIMs@index');
+	Route::get('/SIMs/panel', 'SIMs@showAddNewSimPage');
 	Route::get('/SIMs/{id}', 'SIMs@showSingleSIM', $req = ['/^\d+$/']);
+	Route::post('/SIMs/addNewSIM', 'SIMs@addNewSIM');
 
 	Route::get('/Phones/index', 'Phones@index');
 	Route::get('/Phones/panel', 'Phones@showPageNumTwo');
@@ -31,17 +33,17 @@ if (Auth::logged()) {
 	Route::post('/Charges/makeCharge', 'Charges@makeCharge');
 	Route::post('/Charges/discharge', 'Charges@discharge');
 
+	Route::post('/Models/addNewModel', 'Models@addNewModel');
+
 	Route::get('/Service/index', 'Service@index');
 
-	// if (Auth::admin()) {
-	// 	Route::get('/Admin/index', 'Admin@index');
-	// 	Route::get('/Admin/panel', 'Admin@showPageNumTwo');
-	// 	Route::post('/Admin/addNewUser', 'Admin@addNewUser');
-	// 	Route::post('/Admin/editUserData', 'Admin@editUserData');
-	// 	Route::post('/Admin/removeUser', 'Admin@removeUser');
-	// 	Route::post('/Admin/addNewWriter', 'Admin@addNewWriter');
-	// 	Route::post('/Admin/addNewGenre', 'Admin@addNewGenre');
-	// }
+	if (Auth::admin()) {
+		Route::get('/Admin/index', 'Admin@index');
+		// Route::get('/Admin/panel', 'Admin@showPageNumTwo');
+		Route::post('/Admin/addNewUser', 'Admin@addNewUser');
+		// Route::post('/Admin/editUserData', 'Admin@editUserData');
+		Route::post('/Admin/removeUser', 'Admin@removeUser');
+	}
 
 	Route::get('/AjaxCalls/index', 'AjaxCalls@index');
 

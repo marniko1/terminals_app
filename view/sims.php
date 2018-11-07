@@ -1,18 +1,27 @@
 		<div class="container">
 			<div class="row">
-				<h1>SIMs</h1>
 				<?php
 				// var_dump($this->data['sim_cards']);
 				?>
 				<nav class="navbar col-12 row">
 					<ul class="nav col-12 justify-content-center">
 						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'SIMs/index';?>">Lista sim kartica</a></li>
-						<li class="nav-item border-right"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'SIMs/panel';?>">Dodaj novi sim</a></li>
-						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'SIMs/charge';?>">Zaduženje</a></li>
+						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'SIMs/panel';?>">Dodaj novi sim</a></li>
 					</ul>
 				</nav>
 				<form class="mt-2 col-12 mb-5">
 					<input type="text" name="filter" placeholder="Filter" id="filter">
+					<div class="mt-2 row params">
+						<div class="form-group form-group-inline col-2">
+					      	<select id="sim_purpose" class="form-control" name="sim_purpose">
+					        	<option value="">Namena...</option>
+					        	<option value="pda">pda</option>
+					        	<option value="kontrola">kontrola</option>
+					        	}
+					        	?>
+					      	</select>
+					    </div>
+					</div>
 				</form>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="col-12 table table-sm">

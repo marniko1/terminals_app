@@ -1,11 +1,12 @@
 class Charge {
 	constructor () {
 		this.offNumCecker();
+		this.preventEnterSubmit();
 	}
 	offNumCecker() {
 		$('#off_num').on('change keyup paste', function(){
 			if ($('#off_num').val().length == 5) {
-				$('#agent, #terminal, #sim, #imei, #model').val('');
+				$('#agent, #terminal, #sim_for_charge, #imei, #model').val('');
 				$.ajax({
 					type: "POST",
 					url: root_url + "AjaxCalls/index",
@@ -29,19 +30,19 @@ class Charge {
 								$('#model').val(response[0].phone_model);
 							}
 							if (response[0].num == null) {
-								$('#sim, #submit_btn').attr('disabled', false);
+								$('#sim_for_charge, #submit_btn').attr('disabled', false);
 							} else {
 								var num = response[0].num.toString();
 								num = num.substring(-1,4);
-								$('#sim').val(response[0].num.toString().substring(-1,4));
+								$('#sim_for_charge').val(response[0].num.toString().substring(-1,4));
 							}
 						} else {
 							$('#agent').attr('disabled', false);
 							$('#agent').on('keyup', function(){
 								if ($('#agent').val().match(/[a-zA-Z]{3,}\s[a-zA-Z]{1,}/)) {
-									$('#terminal, #sim, #imei, #submit_btn').attr('disabled', false);
+									$('#terminal, #sim_for_charge, #imei, #submit_btn').attr('disabled', false);
 								} else {
-									$('#terminal, #sim, #imei, #submit_btn').attr('disabled', true);
+									$('#terminal, #sim_for_charge, #imei, #submit_btn').attr('disabled', true);
 								}
 							});
 						}
@@ -51,13 +52,19 @@ class Charge {
 				 	}
 				});
 			} else {
-				$('#agent, #terminal, #sim, #imei, #submit_btn').attr('disabled', true);
-				$('#agent, #terminal, #sim, #imei, #model').val('');
+				$('#agent, #terminal, #sim_for_charge, #imei, #submit_btn').attr('disabled', true);
+				$('#agent, #terminal, #sim_for_charge, #imei, #model').val('');
 				$('#agent').parent().find("input[type='hidden']").remove();
 			}
 		});
 	}
-	agentNameCecker() {
-		
+	preventEnterSubmit() {
+		$('input').on('keydown', function (e) {
+			if(event.keyCode == 13 ) {
+		      	e.preventDefault();
+				var inputs = $(e.target).parents('form').find('input.form-control').not('input:disabled');
+		      	$(inputs).eq(inputs.index(this) + 1).focus();
+		    }
+		});
 	}
 }
