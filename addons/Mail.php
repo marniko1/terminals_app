@@ -14,15 +14,16 @@ class Mail {
 		mail(self::$to, self::$subject, self::$message, self::$headers);
 	}
 	public static function prepareMessage () {
-		// var_dump(func_get_args());die;
 		$params = func_get_args();
-		// if ($params[3] == 0 or $params[4] == 0 or $params[5] == 0) {
-		// 	$dot = '.';
-		// }
 		switch ($params[0]) {
 			// mail for charge
 			case 'charge':
-				self::$to = 'marko.nikolic@apextechnology.rs, veljko.petrovic@apextechnology.com';
+				self::$to = 'kontrola@apextechnology.rs, 
+				dragana.lilic@apextechnology.rs, 
+				jasmina.ciganovic@apextechnology.rs, 
+				edin.becirovic@apextechnology.rs, 
+				veljko.petrovic@apextechnology.com';
+
 				self::$subject = "Zaduženje kontrolora - $params[1]";
 				self::$message = "Zaduženje, $params[1] ($params[2])";
 				if ($params[3] != 0) {
@@ -36,11 +37,18 @@ class Mail {
 				}
 				self::$message .= '.';
 				self::$headers['From'] = 'marko.nikolic@apextechnology.rs';
+				self::$headers['Cc'] = 'vladimir.djukelic@apextechnology.rs';
+				self::$headers['Bcc'] = 'marko.nikolic@apextechnology.rs';
 				break;
 
 			// mail for discharge
 			case 'discharge':
-				self::$to = 'marko.nikolic@apextechnology.rs, veljko.petrovic@apextechnology.com';
+				self::$to = 'kontrola@apextechnology.rs, 
+				dragana.lilic@apextechnology.rs, 
+				jasmina.ciganovic@apextechnology.rs, 
+				edin.becirovic@apextechnology.rs, 
+				veljko.petrovic@apextechnology.com';
+
 				self::$subject = "Razduženje kontrolora - $params[1]";
 				self::$message = "Razduženje, $params[1]($params[2])";
 				if ($params[7] != 0) {
@@ -57,6 +65,8 @@ class Mail {
 					self::$message .= " " . $params[10];
 				}
 				self::$headers['From'] = 'marko.nikolic@apextechnology.rs';
+				self::$headers['Cc'] = 'vladimir.djukelic@apextechnology.rs';
+				self::$headers['Bcc'] = 'marko.nikolic@apextechnology.rs';
 				break;
 
 			case 'terminal_switch':
