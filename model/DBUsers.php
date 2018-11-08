@@ -5,13 +5,14 @@ class DBUsers extends DB {
 		$sql = "select u.*, p.title from users as u 
 		join priviledges as p 
 		on p.id = u.priviledge_id 
-		where username = '$username'";
+		where u.username = '$username' and u.active = 1";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getAllUsers() {
 		$sql = "select u.*, p.title as priviledge from users as u 
 		join priviledges as p 
 		on p.id = u.priviledge_id 
+		where u.active = 1 
 		";
 		$res = self::executeSQL($sql);
 		return self::queryAndFetchInObj($sql);
@@ -26,7 +27,7 @@ class DBUsers extends DB {
 	// 	self::executeSQL($sql);
 	// }
 	public static function removeUser($user_id){
-		$sql = "delete from users where id = $user_id";
+		$sql = "update users set active = 0 where id = $user_id";
 		return self::executeSQL($sql);
 	}
 }

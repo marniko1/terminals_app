@@ -5,4 +5,9 @@ class DBLocations extends DB {
 		$sql = "select * from locations";
 		return self::queryAndFetchInObj($sql);
 	}
+	public static function addNewLocation ($new_location) {
+		$sql = "insert into locations values (default, '$new_location')";
+		$req = self::executeSQL($sql);
+		return $req;
+	}
 }

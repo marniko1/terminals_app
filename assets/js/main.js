@@ -18,8 +18,9 @@ window.onload = function() {
     	|| window.location.pathname == '/terminals_app/SIMs/panel'
     	|| window.location.pathname == '/terminals_app/Phones/panel'
     	|| window.location.pathname == '/terminals_app/Admin/index'
+    	|| window.location.pathname == '/terminals_app/Devices/panel'
     	) {
-    	// console.log('terminal')
+    	console.log('terminal')
     	// form validation
     	var frmvalidator = new Validator($('form'));
 

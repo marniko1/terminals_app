@@ -48,7 +48,7 @@
 									      <td data-name="edit_username"><?php echo $user->username; ?></td>
 									      <td data-name="edit_password"><?php echo $user->password; ?></td>
 									      <td data-name="edit_priviledge"><?php echo $user->priviledge; ?></td>
-									      <th><input type="hidden" name="user_id" value="<?php echo $user->id; ?>" disabled><div class="btn-holder"><input type="button" name="edit" value="Edit" class="btn btn-sm btn-info edit" disabled><input type="submit" name="remove" value="Remove" class="btn btn-sm ml-1 btn-danger remove"></div></th>
+									      <th><input type="hidden" name="user_id" value="<?php echo $user->id; ?>"><div class="btn-holder"><input type="button" name="edit" value="Edit" class="btn btn-sm btn-info edit" disabled><input type="submit" value="Remove" class="btn btn-sm ml-1 btn-danger remove"></div></th>
 									    </tr>
 									<?php
 									}

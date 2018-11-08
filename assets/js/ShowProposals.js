@@ -10,6 +10,7 @@ class ShowProposals {
 				var input_text = false;
 				var proposals_div = $(this).parents('.form-group').find('.proposals');
 				var filter_value = $(this).val().trim();
+				console.log(filter_value);
 				var ul = $(this).parents('.form-group').find('.proposals ul');
 				var label_text = $(e.target).parents('.form-group').find('label').text();
 				if (label_text == 'Terminal Br.: ') {
@@ -24,6 +25,8 @@ class ShowProposals {
 					var fn = 'terminal';
 				} else if (label_text == 'SIM: ') {
 					var fn = 'sim';
+				} else if (label_text == 'Uređaj: ') {
+					var fn = 'device';	
 				} else if (label_text == 'Telefon IMEI: ') {
 					var fn = 'phone';
 					$('#model, #model_hidden').val('');
@@ -36,11 +39,14 @@ class ShowProposals {
 						data: "ajax_fn=" + fn + "Filter&search_value=" + filter_value,
 						success: function(data){
 							var response = JSON.parse(data);
+							console.log(response);
 							var div_html = '';
 							$.each(response, function(i, val){
 								// adding model if proposals are for phone
 								if (fn == 'phone') {
 									div_html += `<li class="pl-1" data-model="${response[i].model}">${response[i].ajax_data}</li>`;
+								} else if (fn == 'device') {
+									div_html += `<li class="pl-1" data-location_id="${response[i].id}">${response[i].ajax_data}</li>`;
 								} else {
 									div_html += `<li class="pl-1">${response[i].ajax_data}</li>`;
 								}
@@ -76,6 +82,9 @@ class ShowProposals {
 								// adding model if proposals are for phone
 								if (fn == 'phone') {
 									$('#model, #model_hidden').val($(this).data('model'));
+								}
+								if (fn == 'device') {
+									$('#location_id').val($(this).data('location_id'));
 								}
 							});
 						},

@@ -1,5 +1,11 @@
 		<div class="container">
 			<div class="row">
+				<nav class="navbar col-12 row">
+					<ul class="nav col-12 justify-content-center">
+						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Devices/index';?>">Lista uređaja</a></li>
+						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'Devices/panel';?>">Lokacije</a></li>
+					</ul>
+				</nav>
 				<form class="mt-2 col-12 mb-5">
 					<div class="form-group">
 						<input type="text" name="filter" placeholder="Filter" id="filter">
@@ -64,7 +70,7 @@
 				</form>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="col-12 table table-sm">
-						<caption>Lista terminala</caption>
+						<caption>Lista uređaja</caption>
 						<thead>
 							<th scope="col" style="width: auto;">#</th>
 						    <th scope="col" style="width: auto;">Serijski broj</th>
@@ -92,7 +98,7 @@
 						<?php
 						}
 						else: ?>
-						<tr><td colspan="6">Nema napravljenih terminala.</td></tr>
+						<tr><td colspan="6">Nema napravljenih uređaja.</td></tr>
 						<?php endif ?>
 						</tbody>
 					</table>

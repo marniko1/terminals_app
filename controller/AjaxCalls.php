@@ -62,6 +62,11 @@ class AjaxCalls extends BaseController {
 		$response = DBPhones::getFilteredPhones($this->search_value);
 		echo json_encode($response);
 	}
+
+	public function deviceFilter () {
+		$response = DBDevices::getFilteredDevicesForChangeLocation($this->search_value);
+		echo json_encode($response);
+	}
 // for filter and pagination
 	public function agentsFilter () {
 		$filtered_data = DBAgents::getFilteredAgents('agent', $this->search_value, $this->skip);

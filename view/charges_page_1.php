@@ -41,6 +41,10 @@
 							<input type="text" name="model" id="model" class="form-control" disabled>
 						</div>
 					</div>
+					<div class="form-group">
+						<input type="checkbox" name="send_mail" id="send_mail" class="form-check-input ml-2" value="1">
+						<label for="send_mail" class="form-check-label ml-4">Pošalji propratni mail</label>
+					</div>
 					<div class="form-group row ml-5 mt-5">
 						<input type="submit" id="submit_btn" value="Potvrdi" class="btn btn-primary submit_btn" disabled>
 					</div>

@@ -145,35 +145,18 @@ class DBDevices extends DB {
 		. "	order by d.sn limit " .PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
+
+	public static function getFilteredDevicesForChangeLocation ($cond) {
+		$sql = "select id, sn as ajax_data from devices
+		where lower(cast(sn as text)) like lower('%$cond%') 
+		or lower(nav_num) like lower('%$cond%') 
+		limit 6
+		";
+		return self::queryAndFetchInObj($sql);
+	}
+
+	public static function changeDeviceLocation ($location_id, $device_id) {
+		$sql = "update devices_locations set location_id = $location_id where device_id = $device_id";
+		return self::executeSQL($sql);
+	}
 }
-
-// select d.sn, d.nav_num, d.id, 
-// m.title as model, 
-// dt.title as type, 
-// swv.software as sw_ver, 
-// dwo.id as writed_off, 
-// l.title as location, 
-// 	(select count(*) from devices as d_s 
-// 		join devices_types as dt_s 
-// 		on dt_s.id = d_s.device_type_id 
-// 		where (lower(cast(d_s.sn as text)) like lower('%%') or lower(d_s.nav_num) like lower('%%')) 
-// 		and cast(dt.id as text) = '2'  and cast(m.id as text) = '5' ) as total 
-// from devices as d 
-
-// join devices_locations as dl 
-// on d.id = dl.device_id 
-// join locations as l 
-// on dl.location_id = l.id 
-// join models as m 
-// on m.id = d.model_id 
-// join devices_types as dt 
-// on dt.id = d.device_type_id 
-// left join devices_softwares as dsw 
-// on dsw.device_id = d.id and dsw.id = (select max(id) from devices_softwares where device_id = d.id) 
-// left join software_v as swv 
-// on swv.id = dsw.software_v_id 
-// left join devices_writes_off as dwo 
-// on dwo.device_id = d.id 
-// where (lower(cast(d.sn as character varying(30))) like lower('%%') or lower(d.nav_num) like lower('%%')) 
-// and cast(dt.id as text) = '1' and cast(m.id as text) = '5' and cast(l.id as text) = '1' and dwo.id is not null 
-// order by d.sn limit 10 offset 0
