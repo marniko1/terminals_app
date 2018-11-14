@@ -1,8 +1,8 @@
-		<div class="container">
+		<div class="container mt-5">
 			<div class="row">
 				<div  class="table-holder" style="min-height: 450px; width:100%">
-					<table class="col-12 table table-sm">
-						<caption>Lista sim kartica</caption>
+					<table class="col-12 table table-sm mt-5">
+						<caption>SIM</caption>
 						<thead>
 							<th scope="col" style="width: auto;">#</th>
 						    <th scope="col" style="width: auto;">Broj</th>

@@ -1,11 +1,8 @@
-		<div class="container">
+		<div class="container mt-5">
 			<div class="row">
-				<?php
-				// var_dump($this->data['terminal']);
-				?>
 				<form method="post" action="<?php echo INCL_PATH.'Terminals/removeTerminal';?>" class="edit_form col-12 mt-5">
 					<table class="table table-sm writers">
-						<caption>Lista terminala</caption>
+						<caption>Terminal</caption>
 						<thead>
 							<th scope="col" style="width: auto;">#</th>
 						    <th scope="col" style="width: auto;">Terminal</th>

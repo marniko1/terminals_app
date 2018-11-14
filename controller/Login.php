@@ -9,6 +9,7 @@ class Login extends BaseController {
 		$checked_credentials = $this->checkCredentials($username, $password);
 		if ($checked_credentials) {
 			$_SESSION['logged'] = true;
+			$_SESSION['username'] = $checked_credentials->username;
 			$_SESSION['user_id'] = $checked_credentials->id;
 			$this->checkPriviledge($checked_credentials->title);
 			header("Location: ".INCL_PATH);

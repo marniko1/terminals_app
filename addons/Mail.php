@@ -15,6 +15,7 @@ class Mail {
 	}
 	public static function prepareMessage () {
 		$params = func_get_args();
+		self::$headers['From'] = $_SESSION['username'] . '@apextechnology.rs';
 		switch ($params[0]) {
 			// mail for charge
 			case 'charge':
@@ -36,7 +37,6 @@ class Mail {
 					self::$message .= ", sim kartica $params[4]";
 				}
 				self::$message .= '.';
-				self::$headers['From'] = 'marko.nikolic@apextechnology.rs';
 				self::$headers['Cc'] = 'vladimir.djukelic@apextechnology.rs';
 				self::$headers['Bcc'] = 'marko.nikolic@apextechnology.rs';
 				break;
@@ -64,7 +64,6 @@ class Mail {
 				if ($params[10] != '') {
 					self::$message .= " " . $params[10];
 				}
-				self::$headers['From'] = 'marko.nikolic@apextechnology.rs';
 				self::$headers['Cc'] = 'vladimir.djukelic@apextechnology.rs';
 				self::$headers['Bcc'] = 'marko.nikolic@apextechnology.rs';
 				break;

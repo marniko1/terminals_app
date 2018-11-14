@@ -117,13 +117,33 @@ class DBTerminals extends DB {
 
 
 	public static function getFilteredTerminals ($cond_name, $cond, $skip, $sql_addon) {
-		$sql = "select tn.terminal_num, 
+		$sql = "select t.id, 
+		tn.terminal_num, 
 		d.sn as pda_sn, d.nav_num as pda_nav_num, 
 		d1.sn as printer_sn, d1.nav_num as printer_nav_num, 
 		sc.num, sc.iccid, d.sn as pda_sn, 
 		l.title as location, 
 
-		(select count(*) from terminals where id not in (select terminal_id from terminals_disassembled) 
+		(select count(*) from terminals as t 
+
+		join sim_cards as sc 
+		on t.sim_cards_id = sc.id 
+		join devices as d 
+		on t.pda_id = d.id 
+		join devices as d1 
+		on t.printer_id = d1.id 
+		join devices_locations as dl 
+		on d.id = dl.device_id 
+		join locations as l 
+		on dl.location_id = l.id 
+		join terminals_num as tn 
+		on tn.id = t.terminals_num_id 
+		join devices_types as dt 
+		on dt.id = d.device_type_id 
+		join devices_types as dt1 
+		on dt1.id = d1.device_type_id 
+
+		where t.id not in (select terminal_id from terminals_disassembled) 
 		and 
 		(
 		cast(tn.terminal_num as text) like '%$cond%' 
@@ -131,6 +151,7 @@ class DBTerminals extends DB {
 		or lower(cast(d.nav_num as text)) like lower('%$cond%') 
 		or lower(cast(d1.sn as text)) like lower('%$cond%') 
 		or lower(cast(d1.nav_num as text)) like lower('%$cond%') 
+		or lower(cast(sc.iccid as text)) like lower('%$cond%') 
 		)
 		" . $sql_addon . "
 		) as total 
@@ -162,6 +183,7 @@ class DBTerminals extends DB {
 		or lower(cast(d.nav_num as text)) like lower('%$cond%') 
 		or lower(cast(d1.sn as text)) like lower('%$cond%') 
 		or lower(cast(d1.nav_num as text)) like lower('%$cond%') 
+		or lower(cast(sc.iccid as text)) like lower('%$cond%') 
 		)
 		" . $sql_addon . "
 		order by tn.terminal_num limit ".PG_RESULTS. "offset $skip

@@ -32,7 +32,9 @@ class DBDevices extends DB {
 		m.title as model, 
 		dt.title as type, 
 		swv.software as sw_ver, 
-		dwo.id as writed_off 
+		dwo.id as writed_off, 
+		t.id as terminal_id, 
+		tn.terminal_num 
 
 		from devices as d 
 		join devices_locations as dl 
@@ -50,6 +52,11 @@ class DBDevices extends DB {
 		on swv.id = dsw.software_v_id
 		left join devices_writes_off as dwo 
 		on dwo.device_id = d.id 
+
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		left join terminals_num as tn 
+		on tn.id = t.terminals_num_id 
 
 		where d.id = $id";
 		return self::queryAndFetchInObj($sql);
