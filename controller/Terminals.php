@@ -4,13 +4,12 @@ class Terminals extends BaseController {
 	public function __construct () {
 		$this->data['title'] = 'Terminals';
 	}
-	public function index ($pg = 0) {
-		$skip = 0;
-		if ($pg !== 0) {
+	public function index ($pg = 1) {
+		if ($pg !== 1) {
 			$pg = substr($pg, 1);
-			$skip = $pg*PG_RESULTS-PG_RESULTS;
+			$this->skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
-		$this->data['terminals'] = DBTerminals::getAllTerminals($skip);
+		$this->data['terminals'] = DBTerminals::getAllTerminals($this->skip);
 		$total_devices_num = $this->data['terminals'][0]->total;
 		$this->data['pagination_links'] = $this->preparePaginationLinks($total_devices_num, $pg);
 		$this->show_view('terminals_page_1');

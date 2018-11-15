@@ -3,6 +3,7 @@
 	<head>
 		<title><?php echo $this->data['title']; ?></title>
 		<meta charset="utf-8">
+		<link rel="shortcut icon" href="<?php  echo INCL_PATH.'assets/images/pda.ico'?>">
 		<link rel="stylesheet" type="text/css" href="<?php  echo INCL_PATH.'assets/css/bootstrap.css'?>">
 		<link rel="stylesheet" type="text/css" href="<?php  echo INCL_PATH.'assets/css/main.css'?>">
 		<script type="text/javascript" src="<?php  echo INCL_PATH.'config/js_path/path.js'?>"></script>

@@ -1,17 +1,21 @@
 <?php
 
 class DBPhones extends DB {
-	public static function getAllPhones () {
-		$sql = "select cp.*, m.title as model from cellphones as cp
+	public static function getAllPhones ($skip) {
+		$sql = "select cp.*, m.title as model, 
+			(select count(*) from cellphones) as total 
+			from cellphones as cp
 			join models as m 
-			on m.id = cp.model_id";
+			on m.id = cp.model_id 
+			limit ".PG_RESULTS. " offset $skip
+			";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function addNewPhone ($model_id, $imei) {
 		$sql = "insert into cellphones values (default, $model_id, $imei)";
 		return self::executeSQL($sql);
 	}
-	public static function getFilteredPhones ($cond) {
+	public static function getFilteredPhonesForCharge ($cond) {
 		$sql = "select cp.imei as ajax_data, m.title as model from cellphones as cp 
 			join models as m 
 			on m.id = cp.model_id
@@ -26,6 +30,16 @@ class DBPhones extends DB {
 			and case when cpc.id is not null then cpco.id is not null else true end 
 
 			order by cp.id limit 6";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function getFilteredPhones ($cond_name, $cond, $skip) {
+		$sql = "select cp.id, m.title, cp.imei, 
+		(select count(*) from cellphones where imei like '%$cond%') as total 
+		from cellphones as cp
+		join models as m 
+		on m.id = cp.model_id 
+		where cp.imei like '%$cond%'
+		";
 		return self::queryAndFetchInObj($sql);
 	}
 }

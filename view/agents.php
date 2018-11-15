@@ -18,7 +18,7 @@
 						foreach ($this->data['agents'] as $key => $agent) {
 						?>
 						<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'Agents/'.$agent->single_agent_id; ?>'">
-							<th scope="row"><?php echo $key + 1; ?></th>
+							<th scope="row"><?php echo $key + 1 + $this->skip; ?></th>
 							<td><?php echo $agent->agent; ?></td>
 							<td><?php echo $agent->off_num; ?></td>
 							<td><?php echo $agent->agent_sim_num; ?></td>

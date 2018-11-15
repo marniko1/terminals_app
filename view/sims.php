@@ -37,7 +37,7 @@
 						foreach ($this->data['sim_cards'] as $key => $sim) {
 						?>
 							<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'SIMs/'.$sim->id; ?>'">
-								<th scope="row"><?php echo $key + 1; ?></th>
+								<th scope="row"><?php echo $key + 1 + $this->skip; ?></th>
 								<td><?php echo '+' . $sim->network . '/' . $sim->num; ?></td>
 								<td><?php echo $sim->iccid; ?></td>
 								<td><?php echo $sim->purpose; ?></td>

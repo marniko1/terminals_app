@@ -8,24 +8,28 @@ if (Auth::logged()) {
 	Route::get('/Terminals/index', 'Terminals@index');
 	Route::get('/Terminals/panel', 'Terminals@showPageNumTwo');
 	Route::get('/Terminals/{id}', 'Terminals@showSingleTerminal', $req = ['/^\d+$/']);
-	// Route::get('/Rentals/{page}', 'Rentals@index', $req = ['/^p\d+$/']);
+	Route::get('/Terminals/{page}', 'Terminals@index', $req = ['/^p\d+$/']);
 	Route::post('/Terminals/addNewTerminal', 'Terminals@addNewTerminal');
 	Route::post('/Terminals/removeTerminal', 'Terminals@removeTerminal');
 
 	Route::get('/Devices/index', 'Devices@index');
 	Route::get('/Devices/panel', 'Devices@showPageNumTwo');
 	Route::get('/Devices/{id}', 'Devices@showSingleDevice', $req = ['/^\d+$/']);
+	Route::get('/Devices/{page}', 'Devices@index', $req = ['/^p\d+$/']);
 	Route::post('/Devices/changeDeviceLocation', 'Devices@changeDeviceLocation');
 
 	Route::get('/SIMs/index', 'SIMs@index');
 	Route::get('/SIMs/panel', 'SIMs@showAddNewSimPage');
 	Route::get('/SIMs/{id}', 'SIMs@showSingleSIM', $req = ['/^\d+$/']);
+	Route::get('/SIMs/{page}', 'SIMs@index', $req = ['/^p\d+$/']);
 	Route::post('/SIMs/addNewSIM', 'SIMs@addNewSIM');
 
 	Route::post('/Locations/addNewLocation', 'Locations@addNewLocation');
 
 	Route::get('/Phones/index', 'Phones@index');
 	Route::get('/Phones/panel', 'Phones@showPageNumTwo');
+	// Route::get('/Phones/{id}', 'Phones@showSinglePhone', $req = ['/^\d+$/']);
+	Route::get('/Phones/{page}', 'Phones@index', $req = ['/^p\d+$/']);
 	Route::post('/Phones/addNewPhone', 'Phones@addNewPhone');
 
 	Route::get('/Agents/index', 'Agents@index');

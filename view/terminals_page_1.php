@@ -39,7 +39,7 @@
 						foreach ($this->data['terminals'] as $key => $terminal) {
 					?>
 							<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'Terminals/'.$terminal->id; ?>'">
-								<th scope="row"><?php echo $key + 1; ?></th>
+								<th scope="row"><?php echo $key + 1 + $this->skip; ?></th>
 								<td><?php echo $terminal->terminal_num; ?></td>
 								<td><?php echo $terminal->pda_sn; ?></td>
 								<td><?php echo $terminal->pda_nav_num; ?></td>

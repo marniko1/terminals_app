@@ -59,7 +59,7 @@ class AjaxCalls extends BaseController {
 	}
 
 	public function phoneFilter () {
-		$response = DBPhones::getFilteredPhones($this->search_value);
+		$response = DBPhones::getFilteredPhonesForCharge($this->search_value);
 		echo json_encode($response);
 	}
 
@@ -90,8 +90,12 @@ class AjaxCalls extends BaseController {
 	public function simsFilter () {
 		$this->params = json_decode($_POST['params']);
 		$sql_addon = $this->makeAdditionalConditionsStringSQL($this->params);
-		// var_dump($sql_addon);die;	
 		$filtered_data = DBSIM::getFilteredSIMs('sim', $this->search_value, $this->skip, $sql_addon);
+		$this->ajaxResponse($filtered_data);
+	}
+
+	public function phonesFilter () {
+		$filtered_data = DBPhones::getFilteredPhones('phone', $this->search_value, $this->skip);
 		$this->ajaxResponse($filtered_data);
 	}
 

@@ -86,7 +86,7 @@
 						foreach ($this->data['devices'] as $key => $terminal) {
 						?>
 						<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'Devices/'.$terminal->id; ?>'">
-							<th scope="row"><?php echo $key + 1; ?></th>
+							<th scope="row"><?php echo $key + 1 + $this->skip; ?></th>
 							<td><?php echo $this->data['devices'][$key]->sn; ?></td>
 							<td><?php echo $this->data['devices'][$key]->nav_num; ?></td>
 							<td><?php echo $this->data['devices'][$key]->model; ?></td>

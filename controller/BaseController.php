@@ -2,6 +2,7 @@
 
 class BaseController {
 	public $data = [];
+	public $skip = 0;
 
 	public function __construct() {
 		$this->data['msg'] = Msg::getMessage();
@@ -34,23 +35,30 @@ class BaseController {
 			$before = $pag_links_limit - $after - 1;
 		}
 		array_push($links, ['p1', '<<<']);
+
+		// *****************************************
 		if ($pg == 1 || $pg == 'index') {
 			array_push($links, ['p1', 'Previous']);
 		} else {
 			array_push($links, ['p'.($pg-1), 'Previous']);
 		}
+		// *****************************************
+		// **********************************************
 		for ($i=$pg - $before; $i <= $pg + $after; $i++) { 
 			array_push($links, ['p'.$i, $i]);
 		}
+		// **********************************************
+		// *****************************************
 		if ($pg == $pg_num) {
 			array_push($links, ['p'.$pg, "Next"]);
 		} else {
-			if ($pg == 0) {
-				array_push($links, ['p2', "Next"]);
-			} else {
+			// if ($pg == 1) {
+			// 	array_push($links, ['p2', "Next"]);
+			// } else {
 				array_push($links, ['p'.($pg+1), "Next"]);
-			}
+			// }
 		}
+		// *****************************************
 		array_push($links, ['p'.$pg_num, '>>>']);
 		return $links;
 	}

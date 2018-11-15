@@ -29,7 +29,7 @@ class DBTerminals extends DB {
 		join devices_types as dt1 
 		on dt1.id = d1.device_type_id 
 		where t.id not in (select terminal_id from terminals_disassembled) 
-		order by tn.terminal_num limit ".PG_RESULTS. "offset $skip
+		order by tn.terminal_num limit ".PG_RESULTS. " offset $skip
 		";
 		return self::queryAndFetchInObj($sql);
 	}
