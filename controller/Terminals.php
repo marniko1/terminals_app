@@ -2,6 +2,7 @@
 
 class Terminals extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'Terminals';
 	}
 	public function index ($pg = 1) {

@@ -2,6 +2,7 @@
 
 class Home extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'Home';
 	}
 	public function index () {

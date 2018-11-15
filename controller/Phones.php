@@ -2,6 +2,7 @@
 
 class Phones extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'Phones';
 	}
 	public function index ($pg = 1) {

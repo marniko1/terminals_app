@@ -20,6 +20,7 @@ class Login extends BaseController {
 	}
 	public function logoutUser () {
 		unset($_SESSION['logged']);
+		unset($_SESSION['username']);
 		unset($_SESSION['priviledge']);
 		header("Location: ".INCL_PATH);
 	}

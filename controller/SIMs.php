@@ -2,6 +2,7 @@
 
 class SIMs extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'SIM';
 	}
 	public function index ($pg = 1) {

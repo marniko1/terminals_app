@@ -2,6 +2,7 @@
 
 class Charges extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'Charges';
 	}
 	public function index () {
@@ -20,8 +21,8 @@ class Charges extends BaseController {
 		}
 		if (intval($send_mail) == 1) {
 			Mail::sendMail('charge', $agent, $off_num, $terminal_num, substr($sim_num, -4), $phone, $phone_model);
-			header("Location: ".INCL_PATH."Charges/index");
 		}
+		header("Location: ".INCL_PATH."Charges/index");
 	}
 	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0, $agent, $off_num, $terminal_num = '', $sim_num = '', $imei = '', $phone_model = '') {
 		$req = DBCharges::makeDischarge($agent_id, intval($terminal), intval($sim), intval($phone), intval($inactive), $_SESSION['user_id']);

@@ -2,6 +2,7 @@
 
 class Agents extends BaseController {
 	public function __construct () {
+		parent::__construct();
 		$this->data['title'] = 'Agents';
 	}
 	public function index ($pg = 1) {
