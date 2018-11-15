@@ -26,7 +26,7 @@
 					</tbody>
 				</table>
 				<?php if ($this->data['device'][0]->terminal_num): ?>
-					<span>Kontrolorski set <b><?php echo $this->data['device'][0]->terminal_num; ?></b></span>
+					<span>Kontrolorski set <a href="<?php echo INCL_PATH.'Terminals/'.$this->data['device'][0]->terminal_id; ?>"><b><?php echo $this->data['device'][0]->terminal_num; ?></b></a></span>
 				<?php else: ?>
 					<span>Uređaj nije u setu.</span>
 				<?php endif ?>
