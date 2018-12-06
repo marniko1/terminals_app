@@ -38,7 +38,7 @@ class DBSIM extends DB {
 		or cast(num as text) like '%$cond%') " . $sql_addon . ") as total 
 		from sim_cards 
 		where (cast(iccid as text) like '%$cond%' or cast(num as character varying(7)) like '%$cond%') " . $sql_addon . "
-		order by num limit ".PG_RESULTS. "offset $skip";
+		order by num limit ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function addNewSIM ($network, $num, $iccid, $purpose) {

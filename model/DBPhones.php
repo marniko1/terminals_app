@@ -39,7 +39,7 @@ class DBPhones extends DB {
 		join models as m 
 		on m.id = cp.model_id 
 		where cp.imei like '%$cond%'
-		";
+		order by cp.id limit  ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
 }

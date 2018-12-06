@@ -14,7 +14,7 @@ class Charges extends BaseController {
 	public function makeCharge ($off_num, $agent, $terminal_num, $sim_num, $phone, $phone_model, $send_mail = 0) {
 		$req = DBCharges::makeNewCharge($agent, $off_num, intval($terminal_num), intval($sim_num), $phone, $_SESSION['user_id']);
 		if ($req) {
-		// if (false) {
+		// if (true) {
 			Msg::createMessage("msg1", "Success.");
 		} else {
 			Msg::createMessage("msg1", "Unsuccess.");
