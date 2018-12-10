@@ -83,6 +83,7 @@ class Mail {
 				foreach ($recipients as $recipient) {
 					$mail->addAddress($recipient);
 				}
+				$mail->addCC('vladimir.djukelic@apextechnology.rs');
 				$mail->Subject = "Razduženje kontrolora - $params[1]";
 				$mail->Body = "Razduženje, $params[1]($params[2])";
 				if ($params[7] != 0) {
