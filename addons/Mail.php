@@ -72,17 +72,17 @@ class Mail {
 
 			// mail for discharge
 			case 'discharge':
-				// $recipients = array(
-				// 					'kontrola@apextechnology.rs', 
-				// 					'dragana.lilic@apextechnology.rs', 
-				// 					'jasmina.ciganovic@apextechnology.rs', 
-				// 					'edin.becirovic@apextechnology.rs', 
-				// 					'veljko.petrovic@apextechnology.rs'
-				// 				);
-				$mail->addAddress('marko.nikolic@apextechnology.rs');
-				// foreach ($recipients as $recipient) {
-				// 	$mail->addAddress($recipient);
-				// }
+				$recipients = array(
+									'kontrola@apextechnology.rs', 
+									'dragana.lilic@apextechnology.rs', 
+									'jasmina.ciganovic@apextechnology.rs', 
+									'edin.becirovic@apextechnology.rs', 
+									'veljko.petrovic@apextechnology.rs'
+								);
+				// $mail->addAddress('marko.nikolic@apextechnology.rs');
+				foreach ($recipients as $recipient) {
+					$mail->addAddress($recipient);
+				}
 				$mail->Subject = "Razduženje kontrolora - $params[1]";
 				$mail->Body = "Razduženje, $params[1]($params[2])";
 				if ($params[7] != 0) {
