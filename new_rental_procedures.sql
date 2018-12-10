@@ -46,7 +46,7 @@ $$
 
 	BEGIN
 
-	select id from agents where concat(initcap(agents.first_name), ' ', initcap(agents.last_name)) = _agent into agent_id;
+	select id from agents where agents.off_num = _off_num into agent_id;
 	select id from agents where agents.off_num = _off_num into off_num_exist;
 	select id from terminals_num where terminal_num = _terminal_num into terminal_num_id;
 	select max(id) from terminals where terminals_num_id = terminal_num_id into terminal_id;

@@ -32,7 +32,7 @@ class Mail {
 
 		    //Recipients
 		    $mail->setFrom($_SESSION['username'] . '@apextechnology.rs');
-		    $mail->addAddress('marko.nikolic@apextechnology.rs');     // Add a recipient
+		    // $mail->addAddress('marko.nikolic@apextechnology.rs');     // Add a recipient
 		    // $mail->addAddress('ellen@example.com');               // Name is optional
 		    // $mail->addReplyTo('info@example.com', 'Information');
 		    // $mail->addCC('cc@example.com');
@@ -44,11 +44,13 @@ class Mail {
 		    switch ($params[0]) {
 			// mail for charge
 			case 'charge':
-				$recipients = array('kontrola@apextechnology.rs', 
+				$recipients = array(
+									'kontrola@apextechnology.rs', 
 									'dragana.lilic@apextechnology.rs', 
 									'jasmina.ciganovic@apextechnology.rs', 
 									'edin.becirovic@apextechnology.rs', 
-									'veljko.petrovic@apextechnology.rs');
+									'veljko.petrovic@apextechnology.rs'
+								);
 				foreach ($recipients as $recipient) {
 					$mail->addAddress($recipient);
 				}
@@ -69,31 +71,34 @@ class Mail {
 				break;
 
 			// mail for discharge
-			// case 'discharge':
-			// 	self::$to = 'kontrola@apextechnology.rs, 
-			// 	dragana.lilic@apextechnology.rs, 
-			// 	jasmina.ciganovic@apextechnology.rs, 
-			// 	edin.becirovic@apextechnology.rs, 
-			// 	veljko.petrovic@apextechnology.rs';
-
-			// 	self::$subject = "Razduženje kontrolora - $params[1]";
-			// 	$mail->Body = "Razduženje, $params[1]($params[2])";
-			// 	if ($params[7] != 0) {
-			// 		$mail->Body .= ", PDA komplet $params[3]";
-			// 	}
-			// 	if ($params[9] != 0) {
-			// 		$mail->Body .= ", telefon $params[6] IMEI: $params[5]";
-			// 	}
-			// 	if ($params[8] != 0) {
-			// 		$mail->Body .= ", sim kartica $params[4]";
-			// 	}
-			// 	$mail->Body .= '.';
-			// 	if ($params[10] != '') {
-			// 		$mail->Body .= " " . $params[10];
-			// 	}
-			// 	self::$headers['Cc'] = 'vladimir.djukelic@apextechnology.rs';
-			// 	self::$headers['Bcc'] = 'marko.nikolic@apextechnology.rs';
-			// 	break;
+			case 'discharge':
+				// $recipients = array(
+				// 					'kontrola@apextechnology.rs', 
+				// 					'dragana.lilic@apextechnology.rs', 
+				// 					'jasmina.ciganovic@apextechnology.rs', 
+				// 					'edin.becirovic@apextechnology.rs', 
+				// 					'veljko.petrovic@apextechnology.rs'
+				// 				);
+				$mail->addAddress('marko.nikolic@apextechnology.rs');
+				// foreach ($recipients as $recipient) {
+				// 	$mail->addAddress($recipient);
+				// }
+				$mail->Subject = "Razduženje kontrolora - $params[1]";
+				$mail->Body = "Razduženje, $params[1]($params[2])";
+				if ($params[7] != 0) {
+					$mail->Body .= ", PDA komplet $params[3]";
+				}
+				if ($params[9] != 0) {
+					$mail->Body .= ", telefon $params[6] IMEI: $params[5]";
+				}
+				if ($params[8] != 0) {
+					$mail->Body .= ", sim kartica $params[4]";
+				}
+				$mail->Body .= '.';
+				if ($params[10] != '') {
+					$mail->Body .= " " . $params[10];
+				}
+				break;
 
 			case 'terminal_switch':
 				

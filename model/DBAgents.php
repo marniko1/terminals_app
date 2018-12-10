@@ -22,6 +22,8 @@ class DBAgents extends DB {
 		left join sim_cards as sc 
 		on sc.id = scc.sim_id 
 
+		where a.active = 1 
+
 		order by agent limit ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
@@ -98,13 +100,13 @@ class DBAgents extends DB {
 		left join sim_cards as sc 
 		on sc.id = scc.sim_id 
 
-		where concat(first_name, ' ', last_name) like '%$cond%'  or cast(off_num as character varying(5)) like '%$cond%' 
+		where a.active = 1 and (lower(concat(first_name, ' ', last_name)) like lower('%$cond%')  or lower(cast(off_num as text)) like lower('%$cond%')) 
 		order by $cond_name 
 		limit ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getAgentByOffNum ($off_num) {
-		$sql = "select concat(initcap(a.first_name), ' ', initcap(a.last_name)) as agent, tn.terminal_num, cp.imei, m.title as phone_model, sc.num from agents as a 
+		$sql = "select concat(initcap(a.first_name), ' ', initcap(a.last_name)) as agent, tn.terminal_num, cp.imei, m.title as phone_model, substr(cast(sc.num as text), 4) as num from agents as a 
 
 		left join terminals_charges as tc 
 		on tc.agent_id = a.id and tc.id not in (select terminal_charge_id from terminals_charges_off) 
