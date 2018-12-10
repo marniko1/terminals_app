@@ -44,6 +44,8 @@ if (Auth::logged()) {
 	Route::post('/Models/addNewModel', 'Models@addNewModel');
 
 	Route::get('/Service/index', 'Service@index');
+	Route::get('/Service/panel', 'Service@showServiceActionPage');
+	Route::get('/Service/admin', 'Service@showServiceAdminPage');
 
 	if (Auth::admin()) {
 		Route::get('/Admin/index', 'Admin@index');
