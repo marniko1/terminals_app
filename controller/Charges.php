@@ -24,7 +24,7 @@ class Charges extends BaseController {
 		}
 		header("Location: ".INCL_PATH."Charges/index");
 	}
-	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0, $agent, $off_num, $terminal_num = '', $sim_num = '', $imei = '', $phone_model = '') {
+	public function discharge ($comment, $agent_id, $terminal = 0, $sim = 0, $phone = 0, $inactive = 0, $send_mail = 0, $agent, $off_num, $terminal_num = '', $sim_num = '', $imei = '', $phone_model = '') {
 		$req = DBCharges::makeDischarge($agent_id, intval($terminal), intval($sim), intval($phone), intval($inactive), $_SESSION['user_id']);
 		if ($req) {
 		// if (false) {
@@ -32,7 +32,9 @@ class Charges extends BaseController {
 		} else {
 			Msg::createMessage("msg1", "Unsuccess.");
 		}
-		Mail::sendMail('discharge', $agent, $off_num, $terminal_num, substr($sim_num, -4), $imei, $phone_model, intval($terminal), intval($sim), intval($phone), $comment);
+		if (intval($send_mail) == 1) {
+			Mail::sendMail('discharge', $agent, $off_num, $terminal_num, substr($sim_num, -4), $imei, $phone_model, intval($terminal), intval($sim), intval($phone), $comment);
+		}
 		header("Location: ".INCL_PATH."Agents/$agent_id");
 	}
 }

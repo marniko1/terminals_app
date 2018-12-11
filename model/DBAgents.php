@@ -47,12 +47,15 @@ class DBAgents extends DB {
 		on tc.agent_id = a.id and tc.id not in (select terminal_charge_id from terminals_charges_off) 
 		left join terminals_charges_off as tco 
 		on tco.terminal_charge_id = tc.id 
+
 		left join terminals as t 
-		on t.id = tc.terminal_id  	 
+		on t.id = tc.terminal_id 
+
 		left join terminals_num as tn 
 		on t.terminals_num_id = tn.id 
+
 		left join terminals as t1 
-		on t1.id = (select max(id) from terminals where terminal_num = tn.terminal_num) 
+		on t1.id = (select max(id) from terminals where terminals_num_id = tn.id) 
 		left join devices as d 
 		on d.id = t1.pda_id 
 		left join devices as d1 

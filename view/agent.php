@@ -86,6 +86,10 @@
 								Prebaci status u neaktivan
 							</label>
 						</div>
+						<div class="form-group mt-4">
+							<input type="checkbox" name="send_mail" id="send_mail" class="form-check-input" value="1">
+							<label for="send_mail" class="form-check-label">Pošalji propratni mail</label>
+						</div>
 					</div>
 					<input type="hidden" name="agent" value="<?php echo $this->data['agent'][0]->agent; ?>">
 					<input type="hidden" name="off_num" value="<?php echo $this->data['agent'][0]->off_num; ?>">

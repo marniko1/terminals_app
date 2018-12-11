@@ -166,4 +166,44 @@ class DBDevices extends DB {
 		$sql = "update devices_locations set location_id = $location_id where device_id = $device_id";
 		return self::executeSQL($sql);
 	}
+	public static function countAllPDA () {
+		$sql = "select count(*) as pda_num from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		where d.device_type_id = 1 and dwo.id is null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPDAInService () {
+		$sql = "select count(*) as pda_num_in_storage from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 1 and dwo.id is null and dl.location_id = 1 and t.id is null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPDAInTerminals () {
+		$sql = "select count(*) as pda_num_in_terminals from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 1 and dwo.id is null and t.id is not null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPDAOnOtherLocations () {
+		$sql = "select count(*) as pda_num_on_other_locations from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 1 and dwo.id is null and t.id is null and dl.location_id != 1 and dl.location_id != 3";
+		return self::queryAndFetchInObj($sql);
+	}
 }

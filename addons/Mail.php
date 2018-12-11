@@ -46,7 +46,7 @@ class Mail {
 			case 'charge':
 				$recipients = array(
 									'kontrola@apextechnology.rs', 
-									'dragana.lilic@apextechnology.rs', 
+									'dragana.tomic@apextechnology.rs', 
 									'jasmina.ciganovic@apextechnology.rs', 
 									'edin.becirovic@apextechnology.rs', 
 									'veljko.petrovic@apextechnology.rs'
@@ -74,7 +74,7 @@ class Mail {
 			case 'discharge':
 				$recipients = array(
 									'kontrola@apextechnology.rs', 
-									'dragana.lilic@apextechnology.rs', 
+									'dragana.tomic@apextechnology.rs', 
 									'jasmina.ciganovic@apextechnology.rs', 
 									'edin.becirovic@apextechnology.rs', 
 									'veljko.petrovic@apextechnology.rs'

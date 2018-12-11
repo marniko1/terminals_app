@@ -9,6 +9,10 @@ class Home extends BaseController {
 		$this->data['terminals_num'] = DBTerminals::countAllTerminals();
 		$this->data['terminals_num_in_storage'] = DBTerminals::countAllTerminalsInStorage();
 		$this->data['charged_terminals_num'] = DBTerminals::countAllChargedTerminals();
+		$this->data['pda_num'] = DBDevices::countAllPDA();
+		$this->data['pda_num_in_storage'] = DBDevices::countAllPDAInService();
+		$this->data['pda_num_in_terminals'] = DBDevices::countAllPDAInTerminals();
+		$this->data['pda_num_on_other_locations'] = DBDevices::countAllPDAOnOtherLocations();
 		$this->show_view('home');
 	}
 }
