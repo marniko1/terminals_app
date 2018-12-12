@@ -11,7 +11,7 @@ class Login extends BaseController {
 			$_SESSION['logged'] = true;
 			$_SESSION['username'] = $checked_credentials->username;
 			$_SESSION['user_id'] = $checked_credentials->id;
-			$this->checkPriviledge($checked_credentials->title);
+			$_SESSION['priviledge'] = $checked_credentials->title;
 			header("Location: ".INCL_PATH);
 		} else {
 			Msg::createMessage("msg1", "Wrong user name or password.");
@@ -36,11 +36,13 @@ class Login extends BaseController {
 			return false;
 		}
 	}
-	public function checkPriviledge ($priviledge) {
-		if ($priviledge == 'admin') {
-			$_SESSION['priviledge'] = 'admin';
-		} else {
-			$_SESSION['priviledge'] = 'user';
-		}
-	}
+	// public function checkPriviledge ($priviledge) {
+	// 	if ($priviledge == 'admin') {
+	// 		$_SESSION['priviledge'] = 'admin';
+	// 	} else if ($priviledge == 'service') {
+	// 		$_SESSION['priviledge'] = 'service';
+	// 	} else {
+	// 		$_SESSION['priviledge'] = 'user';
+	// 	}
+	// }
 }

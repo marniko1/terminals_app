@@ -206,4 +206,46 @@ class DBDevices extends DB {
 		where device_type_id = 1 and dwo.id is null and t.id is null and dl.location_id != 1 and dl.location_id != 3";
 		return self::queryAndFetchInObj($sql);
 	}
+
+
+	public static function countAllPrinters () {
+		$sql = "select count(*) as printers_num from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		where d.device_type_id = 2 and dwo.id is null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPrintersInService () {
+		$sql = "select count(*) as printers_num_in_storage from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 2 and dwo.id is null and dl.location_id = 1 and t.id is null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPrintersInTerminals () {
+		$sql = "select count(*) as printers_num_in_terminals from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 2 and dwo.id is null and t.id is not null";
+		return self::queryAndFetchInObj($sql);
+	}
+	public static function countAllPrintersOnOtherLocations () {
+		$sql = "select count(*) as printers_num_on_other_locations from devices as d 
+		left join devices_writes_off as dwo 
+		on dwo.device_id = d.id 
+		left join terminals as t 
+		on (t.pda_id = d.id or t.printer_id = d.id) and t.id not in (select terminal_id from terminals_disassembled) 
+		join devices_locations as dl 
+		on dl.device_id = d.id 
+		where device_type_id = 2 and dwo.id is null and t.id is null and dl.location_id != 1 and dl.location_id != 3";
+		return self::queryAndFetchInObj($sql);
+	}
 }

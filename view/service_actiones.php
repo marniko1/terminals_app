@@ -10,4 +10,15 @@
 						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'Service/admin';?>">Administracija servisa</a></li>
 					</ul>
 				</nav>
-				<h1>SERVISNE AKCIJE</h1>
+				<h1 class="col-12 mb-5">SERVISNE AKCIJE</h1>
+				<nav class="nav flex-column nav-tabs col-2 border-bottom-0 pr-0">
+				  	<a class="nav-link service_action_links" href="#" id="switch">Zamena PDA</a>
+				  	<a class="nav-link service_action_links" href="#" id="write_off">Otpis uređaja</a>
+				  	<a class="nav-link service_action_links" href="#" id="test">Link</a>
+				  	<!-- <a class="nav-link disabled" href="#">Disabled</a> -->
+				</nav>
+				<div class="col-10 border">
+					<div class="d-none service_action_divs" id="switch_div">zamena</div>
+					<div class="d-none service_action_divs" id="write_off_div">otpis</div>
+					<div class="d-none service_action_divs" id="test_div">test test</div>
+				</div>

@@ -39,7 +39,7 @@ class Charge {
 						} else {
 							$('#agent').attr('disabled', false);
 							$('#agent').on('keyup', function(){
-								if ($('#agent').val().match(/[a-zA-Z]{3,}\s[a-zA-Z]{1,}/)) {
+								if ($('#agent').val().match(/[a-zA-Z\ČčĆćŠšĐđ]{3,}\s[a-zA-Z\ČčĆćŠšĐđ]{1,}/)) {
 									$('#terminal, #sim_for_charge, #imei, #submit_btn').attr('disabled', false);
 								} else {
 									$('#terminal, #sim_for_charge, #imei, #submit_btn').attr('disabled', true);

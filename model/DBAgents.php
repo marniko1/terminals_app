@@ -88,7 +88,27 @@ class DBAgents extends DB {
 		substr(cast(sc.num as text), 4) as agent_sim_num, 
 		tn.terminal_num, 
 
-		(select count(*) from agents where concat(first_name, ' ', last_name) like '%$cond%' or cast(off_num as character varying(5)) like '%$cond%') as total 
+		(
+		select count(*) from agents as a 
+
+		left join terminals_charges as tc 
+		on a.id = tc.agent_id and tc.id not in (select terminal_charge_id from terminals_charges_off) 
+		left join terminals as t 
+		on t.id = tc.terminal_id 
+		left join terminals_num as tn
+		on tn.id = t.terminals_num_id 
+
+		left join sim_cards_charges as scc 
+		on scc.agent_id = a.id 
+		left join sim_cards as sc 
+		on sc.id = scc.sim_id 
+
+		where concat(a.first_name, ' ', a.last_name) like '%$cond%' 
+		or cast(a.off_num as text) like '%$cond%' 
+		or cast(sc.num as text) like '%$cond%' 
+		or cast(tn.terminal_num as text) like '%$cond%' 
+		) as total 
+
 		from agents as a 
 
 		left join terminals_charges as tc 
@@ -103,7 +123,11 @@ class DBAgents extends DB {
 		left join sim_cards as sc 
 		on sc.id = scc.sim_id 
 
-		where a.active = 1 and (lower(concat(first_name, ' ', last_name)) like lower('%$cond%')  or lower(cast(off_num as text)) like lower('%$cond%')) 
+		where a.active = 1 
+		and (lower(concat(first_name, ' ', last_name)) like lower('%$cond%')  
+			or lower(cast(off_num as text)) like lower('%$cond%')
+			or cast(sc.num as text) like '%$cond%') 
+			or cast(tn.terminal_num as text) like '%$cond%' 
 		order by $cond_name 
 		limit ".PG_RESULTS. " offset $skip";
 		return self::queryAndFetchInObj($sql);

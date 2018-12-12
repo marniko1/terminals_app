@@ -20,7 +20,6 @@ window.onload = function() {
     	|| window.location.pathname == '/terminals_app/Admin/index'
     	|| window.location.pathname == '/terminals_app/Devices/panel'
     	) {
-    	console.log('terminal')
     	// form validation
     	var frmvalidator = new Validator($('form'));
 
@@ -83,5 +82,16 @@ window.onload = function() {
 		if ($('span#location_span').text() == 'magacin') {
 			$('input[name="remove"]').attr('disabled', false);
 		}
+	}
+	// **********************************************************************************************
+	// for SERVICE PAGE
+	if (url_part[0] == 'Service' && url_part[1] == 'panel') {
+		$('.service_action_links').on('click', function(e){
+			e.preventDefault();
+			$('.service_action_divs').addClass('d-none');
+			console.log($(this).attr('id'));
+			console.log($(this).attr('id')+'_div');
+			$('#'+$(this).attr('id')+'_div').removeClass('d-none');
+		})
 	}
 }
