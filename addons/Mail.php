@@ -16,10 +16,10 @@ class Mail {
 		    //Server settings
 		    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
 		    $mail->isSMTP();                                      // Set mailer to use SMTP
-		    $mail->Host = 'mail.busplus.rs';  // Specify main and backup SMTP servers
+		    $mail->Host = '********************************';  // Specify main and backup SMTP servers
 		    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-		    $mail->Username = 'marko.nikolic';                 // SMTP username
-		    $mail->Password = '0106982710122';                           // SMTP password
+		    $mail->Username = '*********************';                 // SMTP username
+		    $mail->Password = '**********************';                           // SMTP password
 		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
 		    $mail->Port = 25;                                    // TCP port to connect to 587
 
@@ -31,12 +31,8 @@ class Mail {
 
 
 		    //Recipients
-		    $mail->setFrom($_SESSION['username'] . '@apextechnology.rs');
-		    // $mail->addAddress('marko.nikolic@apextechnology.rs');     // Add a recipient
-		    // $mail->addAddress('ellen@example.com');               // Name is optional
-		    // $mail->addReplyTo('info@example.com', 'Information');
-		    // $mail->addCC('cc@example.com');
-		    $mail->addBCC('marko.nikolic@apextechnology.rs');
+		    $mail->setFrom($_SESSION['username'] . '@******************');
+		    $mail->addBCC('***************************');
 
 		    //Content
 		    $mail->isHTML(true);
@@ -45,16 +41,12 @@ class Mail {
 			// mail for charge
 			case 'charge':
 				$recipients = array(
-									'kontrola@apextechnology.rs', 
-									'dragana.tomic@apextechnology.rs', 
-									'jasmina.ciganovic@apextechnology.rs', 
-									'edin.becirovic@apextechnology.rs', 
-									'veljko.petrovic@apextechnology.rs'
+									
 								);
 				foreach ($recipients as $recipient) {
 					$mail->addAddress($recipient);
 				}
-				$mail->addCC('vladimir.djukelic@apextechnology.rs');
+				$mail->addCC('********************************');
 
 				$mail->Subject = "Zaduženje kontrolora - $params[1]";
 				$mail->Body = "Zaduženje, $params[1] ($params[2])";
@@ -73,17 +65,17 @@ class Mail {
 			// mail for discharge
 			case 'discharge':
 				$recipients = array(
-									'kontrola@apextechnology.rs', 
-									'dragana.tomic@apextechnology.rs', 
-									'jasmina.ciganovic@apextechnology.rs', 
-									'edin.becirovic@apextechnology.rs', 
-									'veljko.petrovic@apextechnology.rs'
+									'***********************', 
+									'********************************', 
+									'*********************************', 
+									'*************************************', 
+									'******************************************'
 								);
-				// $mail->addAddress('marko.nikolic@apextechnology.rs');
+				// $mail->addAddress('**************************************');
 				foreach ($recipients as $recipient) {
 					$mail->addAddress($recipient);
 				}
-				$mail->addCC('vladimir.djukelic@apextechnology.rs');
+				$mail->addCC('******************************************');
 				$mail->Subject = "Razduženje kontrolora - $params[1]";
 				$mail->Body = "Razduženje, $params[1]($params[2])";
 				if ($params[7] != 0) {
